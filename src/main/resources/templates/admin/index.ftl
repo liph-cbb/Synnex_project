@@ -63,7 +63,10 @@
                         <ul class="nav nav-second-level">
                         <@shiro.hasPermission name="system:user:index">
                             <li>
-                                <a class="J_menuItem" href="${ctx!}/apply/index">information</a>
+                                <a class="J_menuItem" href="${ctx!}/apply/index">OVERTIME</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="${ctx!}/apply/emails">EMAILS</a>
                             </li>
                         </@shiro.hasPermission>
 

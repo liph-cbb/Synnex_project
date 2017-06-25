@@ -54,6 +54,8 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(ModelMap map) {
+		List<User> listUser = userService.findAll();
+		map.put("listUser",listUser);
 		return "admin/user/form";
 	}
 

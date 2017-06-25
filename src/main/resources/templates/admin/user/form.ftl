@@ -25,10 +25,10 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>jQuery Validate 简介</h5>
+                        <h5></h5>
                     </div>
                     <div class="ibox-content">
-                        <p>jquery.validate.js 是一款优秀的jQuery表单验证插件。它具有如下特点：</p>
+                        <p>新增用户</p>
                     </div>
                 </div>
             </div>
@@ -52,6 +52,19 @@
                                 <label class="col-sm-3 control-label">昵称：</label>
                                 <div class="col-sm-8">
                                     <input id="nickName" name="nickName" class="form-control" type="text" value="${user.nickName}">
+                                </div>
+                            </div>
+                            <!--add by windsor-->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">上级领导：</label>
+                                <div class="col-sm-8">
+                                    <select name="parent.id" class="form-control">
+                                    <#list listUser as r>
+                                        <option value="${r.leaderid}">
+                                        ${r.leaderid}
+                                        </option>
+                                    </#list>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">

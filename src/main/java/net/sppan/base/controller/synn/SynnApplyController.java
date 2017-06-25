@@ -7,6 +7,7 @@ import net.sppan.base.common.JsonResult;
 import net.sppan.base.controller.BaseController;
 import net.sppan.base.entity.Resource;
 import net.sppan.base.entity.SynnApply;
+import net.sppan.base.entity.SynnEmails;
 import net.sppan.base.entity.User;
 import net.sppan.base.service.IApplyService;
 import net.sppan.base.service.IUserService;
@@ -99,7 +100,15 @@ public class SynnApplyController extends BaseController {
             synnApply.setLast_update_datetime(new Date());
             synnApply.setApplydatetime(new Date());
 
-            iApplyService.saveOrUpdate(synnApply);
+            SynnEmails synnEmails = new SynnEmails();
+            synnEmails.setSendfrom(user.getEmail());
+            synnEmails.setContent(synnApply.getApplyReason());
+            synnEmails.setSendto(synnApply.getEmails());
+            synnEmails.setSubject("申请加班");
+            synnEmails.setSendtime(new Date());
+            synnEmails.setUserid(user.getId());
+            synnEmails.setMailtype(0); //默认0为申请加班邮件
+            iApplyService.sendmailAndSaveinfo(synnEmails, synnApply, user);
         } catch (Exception e) {
             return JsonResult.failure(e.getMessage());
         }

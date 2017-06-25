@@ -63,8 +63,8 @@ public class DateUtil {
 
 
     public static void main(String[] args) {
-        System.out.println(dateDiff("2016-01-09 17:40:00",
-                "2016-01-09 19:30:00","yyyy-MM-dd hh:mm:ss","h"
+        System.out.println(dateDiff("2017-06-25 10:00:00",
+                "2017-06-25 23:00:00","yyyy-MM-dd hh:mm:ss","h"
                 ));
     }
 }

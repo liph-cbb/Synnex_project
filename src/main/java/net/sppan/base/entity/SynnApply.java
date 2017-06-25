@@ -1,6 +1,4 @@
-package net.sppan.base.entity;/**
- * Created by windsor on 2017/6/24.
- */
+package net.sppan.base.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.sun.xml.internal.rngom.parse.host.Base;
@@ -48,17 +46,7 @@ public class SynnApply extends BaseEntity {
 
     private String applyReason;
 
-    @Transient
-    private int emailusersid;
     private String emails;
-
-    public int getEmailusersid() {
-        return emailusersid;
-    }
-
-    public void setEmailusersid(int emailusersid) {
-        this.emailusersid = emailusersid;
-    }
 
     public String getEmails() {
         return emails;

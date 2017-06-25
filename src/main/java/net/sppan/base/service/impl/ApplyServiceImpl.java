@@ -3,7 +3,6 @@ package net.sppan.base.service.impl;/**
  */
 
 import com.alibaba.fastjson.JSONObject;
-import com.sun.xml.internal.rngom.parse.host.Base;
 import net.sppan.base.dao.IEmailDao;
 import net.sppan.base.dao.ISynnApplydao;
 import net.sppan.base.dao.support.IBaseDao;
@@ -12,7 +11,6 @@ import net.sppan.base.entity.SynnEmails;
 import net.sppan.base.entity.User;
 import net.sppan.base.service.IApplyService;
 import net.sppan.base.service.support.impl.BaseServiceImpl;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -58,17 +56,21 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
 
     @Override
     public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp, User synn_users) {
-        JSONObject json = new JSONObject();
-        json.put("from",synn_users.getEmail());
-        json.put("password",synn_users.getPassword());
-        json.put("to",synnEmail.getSendto());
-        json.put("subject",synnEmail.getSubject());
-        json.put("content",synnEmail.getContent());
-        String  s =restTemplate.postForObject(emailserviceurl,json,String.class);
-        System.out.println(s);
-        if(s.equals("success")){
-            iEmailDao.save(synnEmail);
-            iSynnApplydao.save(synnapp);
+        if(synnapp.getApplyid() == null) {
+            JSONObject json = new JSONObject();
+            json.put("from", synn_users.getEmail());
+            json.put("password", "Liyangzhou115");
+            json.put("to", synnEmail.getSendto());
+            json.put("subject", synnEmail.getSubject());
+            json.put("content", synnEmail.getContent());
+            String s = restTemplate.postForObject(emailserviceurl, json, String.class);
+            System.out.println(s);
+            if (s.equals("success")) {
+                iEmailDao.save(synnEmail);
+                iSynnApplydao.save(synnapp);
+            }
+        }else{
+            update(synnapp);
         }
     }
 

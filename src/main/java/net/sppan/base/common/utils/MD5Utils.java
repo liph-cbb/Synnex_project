@@ -39,9 +39,12 @@ public class MD5Utils {
 		}
 		return md5(salt + md5(input));
 	}
-	
+
 	public static void main(String[] args) {
-		System.out.println(md5("111111"));;
+		System.out.println(md5("111111"));
+
+
 	}
-	
+
+
 }

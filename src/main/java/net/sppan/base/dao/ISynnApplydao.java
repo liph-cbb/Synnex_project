@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,12 +17,13 @@ import java.util.List;
  * @author
  * @create 2017-06-24 16:24
  **/
+@Repository
 public interface ISynnApplydao extends IBaseDao<SynnApply, Integer>  {
 
     Page<SynnApply>  findByUserid(int id, Pageable pageable );
 
     Page<SynnApply> findAllByUserid(int searchText, Pageable pageable);
 
-    public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp, User synn_users);
+   // public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp, User synn_users);
 
 }

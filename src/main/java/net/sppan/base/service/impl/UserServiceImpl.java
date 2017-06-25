@@ -60,6 +60,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements I
 			dbUser.setLocked(user.getLocked());
 			dbUser.setDescription(user.getDescription());
 			dbUser.setUpdateTime(new Date());
+			dbUser.setLeaderid(user.getLeaderid());
 			update(dbUser);
 		}else{
 			user.setCreateTime(new Date());
