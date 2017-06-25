@@ -3,9 +3,7 @@ package net.sppan.base.dao;/**
  */
 
 import net.sppan.base.dao.support.IBaseDao;
-import net.sppan.base.entity.Resource;
-import net.sppan.base.entity.Role;
-import net.sppan.base.entity.SynnApply;
+import net.sppan.base.entity.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,4 +21,7 @@ public interface ISynnApplydao extends IBaseDao<SynnApply, Integer>  {
     Page<SynnApply>  findByUserid(int id, Pageable pageable );
 
     Page<SynnApply> findAllByUserid(int searchText, Pageable pageable);
+
+    public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp, User synn_users);
+
 }

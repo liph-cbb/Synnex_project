@@ -85,7 +85,6 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Integer>
 			dbResource.setIsHide(resource.getIsHide());
 			dbResource.setIcon(resource.getIcon());
 			dbResource.setDescription(resource.getDescription());
-			dbResource.setUpdateTime(new Date());
 			dbResource.setParent(resource.getParent());
 			update(dbResource);
 		}else{

@@ -5,6 +5,7 @@ package net.sppan.base.controller.synn;/**
 import net.sppan.base.common.DateUtil;
 import net.sppan.base.common.JsonResult;
 import net.sppan.base.controller.BaseController;
+import net.sppan.base.entity.Resource;
 import net.sppan.base.entity.SynnApply;
 import net.sppan.base.entity.User;
 import net.sppan.base.service.IApplyService;
@@ -16,12 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,11 +45,6 @@ public class SynnApplyController extends BaseController {
     public Page<SynnApply> list(
             @RequestParam(value = "searchText", required = false) String searchText
     ) {
-//		SimpleSpecificationBuilder<Resource> builder = new SimpleSpecificationBuilder<Resource>();
-//		String searchText = request.getParameter("searchText");
-//		if(StringUtils.isNotBlank(searchText)){
-//			builder.add("name", Operator.likeAll.name(), searchText);
-//		}
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
@@ -67,6 +61,27 @@ public class SynnApplyController extends BaseController {
         return "admin/apply/applyform";
     }
 
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable Integer id, ModelMap map) {
+        SynnApply resource =iApplyService.find(id);
+        map.put("resource", resource);
+        List<User> list = iUserService.findAll();
+        map.put("list", list);
+        return "admin/apply/applyform";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult delete(@PathVariable Integer id,ModelMap map) {
+        try {
+            iApplyService.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.failure(e.getMessage());
+        }
+        return JsonResult.success();
+    }
+
     @RequestMapping(value = {"/edit"}, method = RequestMethod.POST)
     @ResponseBody
     public JsonResult edit(SynnApply synnApply, ModelMap map) {
@@ -77,11 +92,13 @@ public class SynnApplyController extends BaseController {
         Long hours = DateUtil.dateDiff(sdf.format(synnApply.getBegindate()), sdf.format(synnApply.getEnddate()),
                 "yyyy-MM-dd hh:mm:ss", "h");
         try {
-            synnApply.setApplyid(user.getId());
             synnApply.setApplystatus(0);//the status of apply is default 0,it express unconfirm
             synnApply.setApplytype(0);
             synnApply.setHours(hours);
             synnApply.setUserid(user.getId());
+            synnApply.setLast_update_datetime(new Date());
+            synnApply.setApplydatetime(new Date());
+
             iApplyService.saveOrUpdate(synnApply);
         } catch (Exception e) {
             return JsonResult.failure(e.getMessage());

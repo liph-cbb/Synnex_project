@@ -156,8 +156,8 @@
 			        title: "操作",
 			        field: "empty",
                     formatter: function (value, row, index) {
-                    	var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
-                    	operateHtml = operateHtml + '<@shiro.hasPermission name="system:user:deleteBatch"><button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.id+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;</@shiro.hasPermission>';
+                    	var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.applyid+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
+                    	operateHtml = operateHtml + '<@shiro.hasPermission name="system:user:deleteBatch"><button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.applyid+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;</@shiro.hasPermission>';
 
                         return operateHtml;
                     }
@@ -165,14 +165,14 @@
 			});
         });
         
-        function edit(id){
+        function edit(applyid){
         	layer.open({
         	      type: 2,
-        	      title: '用户修改',
+        	      title: '信息修改',
         	      shadeClose: true,
         	      shade: false,
         	      area: ['893px', '600px'],
-        	      content: '${ctx!}/admin/user/edit/' + id,
+        	      content: '${ctx!}/apply/edit/' + applyid,
         	      end: function(index){
         	    	  $('#table_list').bootstrapTable("refresh");
        	    	  }
@@ -191,25 +191,13 @@
        	    	  }
         	    });
         }
-        function grant(id){
-        	layer.open({
-        	      type: 2,
-        	      title: '关联角色',
-        	      shadeClose: true,
-        	      shade: false,
-        	      area: ['893px', '600px'],
-        	      content: '${ctx!}/admin/user/grant/'  + id,
-        	      end: function(index){
-        	    	  $('#table_list').bootstrapTable("refresh");
-       	    	  }
-        	    });
-        }
-        function del(id){
+
+        function del(applyid){
         	layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
         		$.ajax({
     	    		   type: "POST",
     	    		   dataType: "json",
-    	    		   url: "${ctx!}/admin/user/delete/" + id,
+    	    		   url: "${ctx!}/apply/delete/" + applyid,
     	    		   success: function(msg){
 	 	   	    			layer.msg(msg.message, {time: 2000},function(){
 	 	   	    				$('#table_list').bootstrapTable("refresh");

@@ -25,8 +25,8 @@ public class SynnApply extends BaseEntity {
     @Column(name="user_id")
     private Integer userid;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date applydatetime = new Date();
+   @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date applydatetime;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date begindate;
@@ -41,12 +41,32 @@ public class SynnApply extends BaseEntity {
 
     private int approve_user_id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date last_update_datetime  = new Date();
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date last_update_datetime;
 
     private int applystatus;
 
     private String applyReason;
+
+    @Transient
+    private int emailusersid;
+    private String emails;
+
+    public int getEmailusersid() {
+        return emailusersid;
+    }
+
+    public void setEmailusersid(int emailusersid) {
+        this.emailusersid = emailusersid;
+    }
+
+    public String getEmails() {
+        return emails;
+    }
+
+    public void setEmails(String emails) {
+        this.emails = emails;
+    }
 
     public int getApplytype() {
         return applytype;

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title> - 表单验证 jQuery Validation</title>
+    <title> -加班申请</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -42,13 +42,12 @@
                 </div>
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/edit">
-                        <input type="hidden" id="id" name="id">
-
+                        <input type="hidden" id="id" name="applyid" value="${resource.applyid}" >
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开始时间：</label>
                             <div class="col-sm-8">
                                 <input id="begindate" name="begindate" readonly="readonly"
-                                       class="laydate-icon form-control layer-date">
+                                       class="laydate-icon form-control layer-date" value="${resource.begindate}">
                             </div>
                         </div>
 
@@ -57,15 +56,15 @@
                             <label class="col-sm-3 control-label">结束时间：</label>
                             <div class="col-sm-8">
                                 <input id="enddate" name="enddate" readonly="readonly"
-                                       class="laydate-icon form-control layer-date">
+                                       class="laydate-icon form-control layer-date" value="${resource.enddate}">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">发送邮箱：</label>
                             <div class="col-sm-8">
-                                <select name="email" id="email" class="selectpicker show-tick form-control" multiple
-                                        data-live-search="false">
+                                <select name="emails" id="emails" class="selectpicker show-tick form-control" multiple
+                                        data-live-search="false" value="${resource.emails}">
                                 <#list list as r>
                                     <option value="${r.email}">
                                     ${r.nickName}
@@ -78,7 +77,9 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">加班原因说明：</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="applyReason" name="applyReason"></textarea>
+                                <textarea class="form-control" id="applyReason" name="applyReason" value="${resource.applyReason}">
+                                ${resource.applyReason}
+                                </textarea>
                             </div>
                         </div>
 
@@ -154,7 +155,7 @@
                     required: true
                 },
 
-                email: {
+                emails: {
                     required: true
                 },
                 applyReason: {
