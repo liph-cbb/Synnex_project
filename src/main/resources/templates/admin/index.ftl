@@ -56,9 +56,27 @@
                     <li>
                         <a href="#">
                             <i class="fa fa fa-cog"></i>
+                            <span class="nav-label">SYNNEX_PROJECT</span>
+                            <span class="fa arrow"></span>
+                        </a>
+
+                        <ul class="nav nav-second-level">
+                        <@shiro.hasPermission name="system:user:index">
+                            <li>
+                                <a class="J_menuItem" href="${ctx!}/apply/index">information</a>
+                            </li>
+                        </@shiro.hasPermission>
+
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa fa-cog"></i>
                             <span class="nav-label">系统管理</span>
                             <span class="fa arrow"></span>
                         </a>
+
                         <ul class="nav nav-second-level">
                          <@shiro.hasPermission name="system:user:index">
                             <li>

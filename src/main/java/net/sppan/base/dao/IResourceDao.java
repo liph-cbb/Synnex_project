@@ -21,6 +21,8 @@ public interface IResourceDao extends IBaseDao<Resource, Integer> {
 
 	Page<Resource> findAllByNameContaining(String searchText, Pageable pageable);
 
+
+
 	List<Resource> findAllByOrderByParentAscIdAscSortAsc();
 
 }
