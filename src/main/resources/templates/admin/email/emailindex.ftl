@@ -29,12 +29,12 @@
             <div class="col-sm-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                    <h5>申请加班</h5>
+                    <h5>邮件信息</h5>
                 </div>
                     <div class="ibox-content">
                         <p>
                         	<@shiro.hasPermission name="system:user:add">
-                        		<button class="btn btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;加班申请</button>
+                        		<button class="btn btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;编写邮件</button>
                         	</@shiro.hasPermission>
                         </p>
                         <hr>
@@ -82,7 +82,7 @@
 			    //必须设置，不然request.getParameter获取不到请求参数
 			    contentType: "application/x-www-form-urlencoded",
 			    //获取数据的Servlet地址  
-			    url: "${ctx!}/apply/list",
+			    url: "${ctx!}/email/list",
 			    //表格显示条纹  
 			    striped: true,
 			    //启动分页  
@@ -113,45 +113,24 @@
 			    //数据列
 			    columns: [{
 			        title: "ID",
-			        field: "applyid",
+			        field: "id",
 			        sortable: true
 			    },{
-			        title: "申请用户",
+			        title: "发件人",
 			        field: "userid"
 			    },{
-			        title: "审批状态",
-			        sortable: true,
-			        field: "applystatus",
-                    formatter: function (value, row, index) {
-                        if (value == '0') 
-                        	return '<span class="label label-info">未审批</span>';
-                        return '<span class="label label-danger">已审批</span>';
-                    }
-			    },{
 			        title: "类型",
-			        field: "applytype",
+			        field: "mailtype",
 			        formatter: function (value, row, index) {
                         if (value == '0') 
-                        	return '<span class="label label-info">申请加班</span>';
-                        return '<span class="label label-danger">申请调休</span>';
+                        	return '<span class="label label-info">申请加班邮件</span>';
+                        return '<span class="label label-danger">申请调休邮件</span>';
                     }
 			    },{
-			        title: "创建时间",
-			        field: "applydatetime",
+			        title: "发送时间",
+			        field: "sendtime",
 			        sortable: true
-			    },{
-			        title: "加班开始时间",
-			        field: "begindate",
-			        sortable: true
-			    },{
-                    title: "加班结束时间",
-                    field: "enddate",
-                    sortable: true
-                },{
-                    title: "加班时长(小时)",
-                    field: "hours",
-                    sortable: true
-                },
+			    },
 					{
 			        title: "操作",
 			        field: "empty",
@@ -210,7 +189,7 @@
         
         function detailFormatter(index, row) {
 	        var html = [];
-	        html.push('<p><b>描述:</b> ' + row.applyReason + '</p>');
+	        html.push('<p><b>内容:</b> ' + row.content + '</p>');
 	        return html.join('');
 	    }
     </script>

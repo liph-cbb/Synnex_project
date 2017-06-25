@@ -66,7 +66,7 @@
                                 <a class="J_menuItem" href="${ctx!}/apply/index">OVERTIME</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="${ctx!}/apply/emails">EMAILS</a>
+                                <a class="J_menuItem" href="${ctx!}/email/index">EMAILS</a>
                             </li>
                         </@shiro.hasPermission>
 
