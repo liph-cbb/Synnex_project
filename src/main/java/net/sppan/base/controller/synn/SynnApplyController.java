@@ -102,6 +102,7 @@ public class SynnApplyController extends BaseController {
 
             SynnEmails synnEmails = new SynnEmails();
             synnEmails.setSendfrom(user.getEmail());
+          //  synnEmails.setTouserid(user.getId());
             synnEmails.setContent(synnApply.getApplyReason());
             synnEmails.setSendto(synnApply.getEmails());
             synnEmails.setSubject("申请加班");

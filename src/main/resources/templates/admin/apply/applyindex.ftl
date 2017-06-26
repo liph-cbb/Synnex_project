@@ -33,7 +33,7 @@
                 </div>
                     <div class="ibox-content">
                         <p>
-                        	<@shiro.hasPermission name="system:user:add">
+                        	<@shiro.hasPermission name="apply:index:add">
                         		<button class="btn btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;加班申请</button>
                         	</@shiro.hasPermission>
                         </p>
@@ -156,8 +156,8 @@
 			        title: "操作",
 			        field: "empty",
                     formatter: function (value, row, index) {
-                    	var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.applyid+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
-                    	operateHtml = operateHtml + '<@shiro.hasPermission name="system:user:deleteBatch"><button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.applyid+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;</@shiro.hasPermission>';
+                    	var operateHtml = '<@shiro.hasPermission name="apply:index:edit"><button class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.applyid+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
+                    	operateHtml = operateHtml + '<@shiro.hasPermission name="apply:index:deleteBatch"><button class="btn btn-danger btn-xs" type="button" onclick="del(\''+row.applyid+'\')"><i class="fa fa-remove"></i>&nbsp;删除</button> &nbsp;</@shiro.hasPermission>';
 
                         return operateHtml;
                     }

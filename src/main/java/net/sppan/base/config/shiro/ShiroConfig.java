@@ -91,6 +91,7 @@ public class ShiroConfig {
 //		filterChainDefinitionMap.put("/admin/resource/deleteBatch", "perms[system:resource:deleteBatch]");
 		
 		filterChainDefinitionMap.put("/admin/**", "authc");
+		filterChainDefinitionMap.put("/apply/**","authc");
 		shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilter;
 	}

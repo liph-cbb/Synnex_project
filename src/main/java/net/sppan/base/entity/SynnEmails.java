@@ -18,7 +18,7 @@ public class SynnEmails  extends BaseEntity {
     private int id;
 
     private int userid;
-
+    private int touserid;
     private String sendfrom;
     private String sendto;
     private String subject;
@@ -92,6 +92,11 @@ public class SynnEmails  extends BaseEntity {
     public void setSendtime(Date sendtime) {
         this.sendtime = sendtime;
     }
+    public int getTouserid() {
+        return touserid;
+    }
 
-
+    public void setTouserid(int touserid) {
+        this.touserid = touserid;
+    }
 }

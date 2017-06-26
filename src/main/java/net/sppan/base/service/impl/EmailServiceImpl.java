@@ -29,7 +29,8 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
 
     @Override
     public Page<SynnEmails> findAllByUserid(int searchText, PageRequest pageRequest) {
-        return iEmailDao.findAllByUserid(searchText,pageRequest);
+        return iEmailDao.findByUserid(searchText,pageRequest);
+
     }
 
     @Override

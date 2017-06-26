@@ -74,7 +74,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements I
 		Role role = find(id);
 		Assert.notNull(role, "角色不存在");
 		
-		Assert.state(!"administrator".equals(role.getRoleKey()),"超级管理员角色不能进行资源分配");
+	//	Assert.state(!"administrator".equals(role.getRoleKey()),"超级管理员角色不能进行资源分配");
 		Resource resource;
 		Set<Resource> resources = new HashSet<Resource>();
 		if(resourceIds != null){

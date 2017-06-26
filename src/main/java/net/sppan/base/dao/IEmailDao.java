@@ -19,5 +19,5 @@ import java.util.List;
 public interface IEmailDao extends IBaseDao<SynnEmails, Integer> {
     Page<SynnEmails>  findByUserid(int id, Pageable pageable );
 
-    Page<SynnEmails> findAllByUserid(int searchText, Pageable pageable);
+    Page<SynnEmails> findAllBy(int searchText, Pageable pageable);
 }

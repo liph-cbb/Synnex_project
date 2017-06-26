@@ -11,6 +11,7 @@ import net.sppan.base.entity.SynnEmails;
 import net.sppan.base.entity.User;
 import net.sppan.base.service.IApplyService;
 import net.sppan.base.service.support.impl.BaseServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -60,13 +61,22 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
             JSONObject json = new JSONObject();
             json.put("from", synn_users.getEmail());
             json.put("password", "Liyangzhou115");
-            json.put("to", synnEmail.getSendto());
+            json.put("to", synnEmail.getSendto().replace(",",";"));
             json.put("subject", synnEmail.getSubject());
             json.put("content", synnEmail.getContent());
             String s = restTemplate.postForObject(emailserviceurl, json, String.class);
-            System.out.println(s);
-            if (s.equals("success")) {
-                iEmailDao.save(synnEmail);
+            if (s.equals("success")) {//假如是多人收件
+                if(synnEmail.getSendto().contains(",")){
+                    String [] emails = synnEmail.getSendto().split(",");
+                    for(int i=0;i<emails.length;i++){
+                        SynnEmails synnEmails = new SynnEmails();
+                        BeanUtils.copyProperties(synnEmail,synnEmails);
+                        synnEmails.setSendto(emails[i]);
+                        if(!"".equals(emails[i])) {
+                            iEmailDao.save(synnEmails);
+                        }
+                    }
+                }
                 iSynnApplydao.save(synnapp);
             }
         }else{

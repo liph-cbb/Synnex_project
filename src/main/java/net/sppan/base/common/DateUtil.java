@@ -12,7 +12,7 @@ import java.util.Date;
  **/
 public class DateUtil {
     /**
-     * 倆個日期的時差計算，不足一小时不累计如小时数
+     * 倆個日期的时差计算，不足一小时不累计如小时数
      * @param startTime
      * @param endTime
      * @param format
@@ -63,8 +63,10 @@ public class DateUtil {
 
 
     public static void main(String[] args) {
-        System.out.println(dateDiff("2017-06-25 10:00:00",
-                "2017-06-25 23:00:00","yyyy-MM-dd hh:mm:ss","h"
-                ));
+//        System.out.println(dateDiff("2017-06-25 10:00:00",
+//                "2017-06-25 23:00:00","yyyy-MM-dd hh:mm:ss","h"
+//                ));
+        System.out.println("abcdeft".contains("addd"));
+        System.out.println("abcdeft".replace("k","1231"));
     }
 }
