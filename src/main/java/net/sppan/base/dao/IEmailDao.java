@@ -17,7 +17,10 @@ import java.util.List;
  **/
 @Repository
 public interface IEmailDao extends IBaseDao<SynnEmails, Integer> {
-    Page<SynnEmails>  findByUserid(int id, Pageable pageable );
+    Page<SynnEmails>  findBySendfromOrSendto(String email, Pageable pageable );
 
-    Page<SynnEmails> findAllBy(int searchText, Pageable pageable);
+    Page<SynnEmails> findAllBySendfromOrSendto(String email,Pageable pageable);
+
+    Page<SynnEmails> findByUserid(Integer integer,Pageable pageable);
+    Page<SynnEmails> findByTouserid(Integer integer,Pageable pageable);
 }

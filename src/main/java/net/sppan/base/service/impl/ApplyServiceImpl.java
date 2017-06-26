@@ -66,7 +66,7 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
             json.put("content", synnEmail.getContent());
             String s = restTemplate.postForObject(emailserviceurl, json, String.class);
             if (s.equals("success")) {//假如是多人收件
-                if(synnEmail.getSendto().contains(",")){
+                if(synnEmail.getSendto().contains(",")==true){
                     String [] emails = synnEmail.getSendto().split(",");
                     for(int i=0;i<emails.length;i++){
                         SynnEmails synnEmails = new SynnEmails();
@@ -76,6 +76,8 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
                             iEmailDao.save(synnEmails);
                         }
                     }
+                }else{
+                    iEmailDao.save(synnEmail);
                 }
                 iSynnApplydao.save(synnapp);
             }

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>加班/调休信息</title>
+    <title>收件箱信息</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -29,7 +29,7 @@
             <div class="col-sm-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                    <h5>邮件信息</h5>
+                    <h5>收件箱</h5>
                 </div>
                     <div class="ibox-content">
                         <p>
@@ -160,7 +160,7 @@
         function add(){
         	layer.open({
         	      type: 2,
-        	      title: '加班申请',
+        	      title: '编写邮件',
         	      shadeClose: true,
         	      shade: false,
         	      area: ['893px', '600px'],

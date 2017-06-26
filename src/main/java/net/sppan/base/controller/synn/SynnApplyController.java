@@ -89,6 +89,7 @@ public class SynnApplyController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
+        User touser = iUserService.findByEmail(synnApply.getEmails());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Long hours = DateUtil.dateDiff(sdf.format(synnApply.getBegindate()), sdf.format(synnApply.getEnddate()),
                 "yyyy-MM-dd hh:mm:ss", "h");
@@ -102,13 +103,14 @@ public class SynnApplyController extends BaseController {
 
             SynnEmails synnEmails = new SynnEmails();
             synnEmails.setSendfrom(user.getEmail());
-          //  synnEmails.setTouserid(user.getId());
+            synnEmails.setTouserid(touser.getId());
             synnEmails.setContent(synnApply.getApplyReason());
             synnEmails.setSendto(synnApply.getEmails());
             synnEmails.setSubject("申请加班");
             synnEmails.setSendtime(new Date());
             synnEmails.setUserid(user.getId());
             synnEmails.setMailtype(0); //默认0为申请加班邮件
+
             iApplyService.sendmailAndSaveinfo(synnEmails, synnApply, user);
         } catch (Exception e) {
             return JsonResult.failure(e.getMessage());

@@ -19,6 +19,11 @@ import java.util.List;
 public interface IEmailService  extends IBaseService<SynnEmails, Integer> {
 
     void saveOrUpdate(SynnEmails synnEmails);
-    Page<SynnEmails> findAll(Pageable pageable);
-    Page<SynnEmails> findAllByUserid(int searchText, PageRequest pageRequest);
+    Page<SynnEmails>  findBySendfromOrSendto(String email,PageRequest pageRequest );
+
+    Page<SynnEmails> findAllBySendfromOrSendto(String email,PageRequest pageRequest );
+
+    Page<SynnEmails> findByUserid(Integer integer,PageRequest pageRequest);
+
+    Page<SynnEmails> findByToUserid(Integer integer,PageRequest pageRequest);
 }

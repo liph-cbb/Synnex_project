@@ -23,6 +23,8 @@ public interface IUserService extends IBaseService<User, Integer> {
 	 */
 	User findByUserName(String username);
 
+	User findByEmail(String email);
+
 	/**
 	 * 增加或者修改用户
 	 * @param user

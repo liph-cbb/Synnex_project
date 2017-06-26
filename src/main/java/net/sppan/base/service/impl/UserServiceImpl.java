@@ -48,6 +48,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements I
 	}
 
 	@Override
+	public User findByEmail(String email) {
+		return userDao.findByEmail(email);
+	}
+
+	@Override
 	public void saveOrUpdate(User user) {
 		if(user.getId() != null){
 			User dbUser = find(user.getId());

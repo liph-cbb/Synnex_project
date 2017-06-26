@@ -10,6 +10,7 @@ import net.sppan.base.service.support.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,13 +25,27 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
 
     @Override
     public void saveOrUpdate(SynnEmails synnEmails) {
-
+        iEmailDao.saveAndFlush(synnEmails);
     }
 
     @Override
-    public Page<SynnEmails> findAllByUserid(int searchText, PageRequest pageRequest) {
-        return iEmailDao.findByUserid(searchText,pageRequest);
+    public Page<SynnEmails> findBySendfromOrSendto(String email, PageRequest pageRequest) {
+        return iEmailDao.findBySendfromOrSendto(email,pageRequest);
+    }
 
+    @Override
+    public Page<SynnEmails> findAllBySendfromOrSendto(String email, PageRequest pageRequest) {
+        return iEmailDao.findAllBySendfromOrSendto(email,pageRequest);
+    }
+
+    @Override
+    public Page<SynnEmails> findByUserid(Integer integer, PageRequest pageRequest) {
+        return iEmailDao.findByUserid(integer,pageRequest);
+    }
+
+    @Override
+    public Page<SynnEmails> findByToUserid(Integer integer, PageRequest pageRequest) {
+        return iEmailDao.findByTouserid(integer,pageRequest);
     }
 
     @Override

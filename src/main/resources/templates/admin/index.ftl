@@ -53,6 +53,7 @@
                             <span class="nav-label">主页</span>
                         </a>
                     </li>
+
                     <li>
                         <a href="#">
                             <i class="fa fa fa-cog"></i>
@@ -61,10 +62,12 @@
                         </a>
 
                         <ul class="nav nav-second-level">
-                        <@shiro.hasPermission name="system:user:index">
+                        <@shiro.hasPermission name="apply:index">
                             <li>
                                 <a class="J_menuItem" href="${ctx!}/apply/index">OVERTIME</a>
                             </li>
+                        </@shiro.hasPermission>
+                        <@shiro.hasPermission name="apply:email">
                             <li>
                                 <a class="J_menuItem" href="${ctx!}/email/index">EMAILS</a>
                             </li>

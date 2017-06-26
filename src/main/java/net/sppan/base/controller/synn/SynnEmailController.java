@@ -46,7 +46,7 @@ public class SynnEmailController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
-        Page<SynnEmails> page = iEmailService.findAllByUserid(Integer.getInteger(searchText),getPageRequest());
+        Page<SynnEmails> page = iEmailService.findByToUserid(user.getId(),getPageRequest());
         return page;
     }
 }

@@ -52,7 +52,6 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Integer>
 		Role role = roleService.find(roleId);
 		Set<Resource> roleResources = role.getResources();
 		resulTreeNodes.add(new ZtreeView(0L, null, "系统菜单", true));
-		resulTreeNodes.add(new ZtreeView(1L, null, "SYNNEXPROJECT", true));
 
 		ZtreeView node;
 		List<Resource> all = resourceDao.findAllByOrderByParentAscIdAscSortAsc();

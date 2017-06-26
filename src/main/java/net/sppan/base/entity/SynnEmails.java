@@ -1,5 +1,6 @@
 package net.sppan.base.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import net.sppan.base.entity.support.BaseEntity;
 
 import javax.persistence.*;
@@ -24,11 +25,10 @@ public class SynnEmails  extends BaseEntity {
     private String subject;
     private String content;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date sendtime = new Date();
 
     private int mailtype;
-
 
     public int getUserid() {
         return userid;
