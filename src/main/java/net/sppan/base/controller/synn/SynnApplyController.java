@@ -49,8 +49,8 @@ public class SynnApplyController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
-        Page<SynnApply> page = iApplyService.findAllByUserid(user.getId(), getPageRequest());
-
+       // Page<SynnApply> page = iApplyService.findAllByUserid(user.getId(), getPageRequest());
+        Page<SynnApply> page = iApplyService.findAllByUseridOrApproveuserid(user.getId().longValue(),user.getId().longValue(),getPageRequest());
         return page;
     }
 
@@ -96,19 +96,19 @@ public class SynnApplyController extends BaseController {
         try {
             synnApply.setApplystatus(0);//the status of apply is default 0,it express unconfirm
             synnApply.setApplytype(0);
-            synnApply.setHours(hours);
-            synnApply.setUserid(user.getId());
+            synnApply.setHours(hours.intValue());
+            synnApply.setUserid(user.getId().longValue());
             synnApply.setLast_update_datetime(new Date());
             synnApply.setApplydatetime(new Date());
 
             SynnEmails synnEmails = new SynnEmails();
             synnEmails.setSendfrom(user.getEmail());
-            synnEmails.setTouserid(touser.getId());
+            synnEmails.setTouserid(touser.getId().longValue());
             synnEmails.setContent(synnApply.getApplyReason());
             synnEmails.setSendto(synnApply.getEmails());
             synnEmails.setSubject("申请加班");
             synnEmails.setSendtime(new Date());
-            synnEmails.setUserid(user.getId());
+            synnEmails.setUserid(user.getId().longValue());
             synnEmails.setMailtype(0); //默认0为申请加班邮件
 
             iApplyService.sendmailAndSaveinfo(synnEmails, synnApply, user);

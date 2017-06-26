@@ -23,4 +23,6 @@ public interface IEmailDao extends IBaseDao<SynnEmails, Integer> {
 
     Page<SynnEmails> findByUserid(Integer integer,Pageable pageable);
     Page<SynnEmails> findByTouserid(Integer integer,Pageable pageable);
+
+    Page<SynnEmails> findAllByUseridOrTouserid(Long userId,Long toUserId,Pageable pageable);
 }

@@ -20,7 +20,7 @@ public interface IApplyService extends IBaseService<SynnApply, Integer>{
     void saveOrUpdate(SynnApply synnApply);
 
     public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp, User synn_users);
-
+    Page<SynnApply> findAllByUseridOrApproveuserid(Long userid,Long touserid,PageRequest pageRequest);
 }
 
 

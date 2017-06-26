@@ -16,10 +16,9 @@ public class SynnEmails  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="emailId")
-    private int id;
-
-    private int userid;
-    private int touserid;
+    private Long id;
+    private Long userid;
+    private Long touserid;
     private String sendfrom;
     private String sendto;
     private String subject;
@@ -28,21 +27,30 @@ public class SynnEmails  extends BaseEntity {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date sendtime = new Date();
 
-    private int mailtype;
+    private Integer mailtype;
 
-    public int getUserid() {
-        return userid;
-    }
-
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public Long getTouserid() {
+        return touserid;
+    }
+
+    public void setTouserid(Long touserid) {
+        this.touserid = touserid;
     }
 
     public String getSendfrom() {
@@ -59,14 +67,6 @@ public class SynnEmails  extends BaseEntity {
 
     public void setSendto(String sendto) {
         this.sendto = sendto;
-    }
-
-    public int getMailtype() {
-        return mailtype;
-    }
-
-    public void setMailtype(int mailtype) {
-        this.mailtype = mailtype;
     }
 
     public String getSubject() {
@@ -92,11 +92,12 @@ public class SynnEmails  extends BaseEntity {
     public void setSendtime(Date sendtime) {
         this.sendtime = sendtime;
     }
-    public int getTouserid() {
-        return touserid;
+
+    public Integer getMailtype() {
+        return mailtype;
     }
 
-    public void setTouserid(int touserid) {
-        this.touserid = touserid;
+    public void setMailtype(Integer mailtype) {
+        this.mailtype = mailtype;
     }
 }

@@ -24,6 +24,5 @@ public interface ISynnApplydao extends IBaseDao<SynnApply, Integer>  {
 
     Page<SynnApply> findAllByUserid(int searchText, Pageable pageable);
 
-   // public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp, User synn_users);
-
+    Page<SynnApply> findAllByUseridOrApproveuserid(Long userid,Long touserid,Pageable pageable);
 }

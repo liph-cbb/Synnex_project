@@ -26,4 +26,6 @@ public interface IEmailService  extends IBaseService<SynnEmails, Integer> {
     Page<SynnEmails> findByUserid(Integer integer,PageRequest pageRequest);
 
     Page<SynnEmails> findByToUserid(Integer integer,PageRequest pageRequest);
+
+    Page<SynnEmails> findAllByUseridOrTouserid(Long userId,Long toUserId,PageRequest pageRequest);
 }

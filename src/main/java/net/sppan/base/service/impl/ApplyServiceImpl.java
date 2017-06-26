@@ -87,6 +87,11 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
     }
 
     @Override
+    public Page<SynnApply> findAllByUseridOrApproveuserid(Long userid, Long touserid, PageRequest pageRequest) {
+        return iSynnApplydao.findAllByUseridOrApproveuserid(userid,touserid,pageRequest);
+    }
+
+    @Override
     public IBaseDao<SynnApply, Integer> getBaseDao() {
         return  this.iSynnApplydao;
     }

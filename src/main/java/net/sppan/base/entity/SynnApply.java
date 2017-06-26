@@ -18,10 +18,10 @@ public class SynnApply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "apply_id")
-    private Integer applyid;
+    private Long applyid;
 
     @Column(name="user_id")
-    private Integer userid;
+    private Long userid;
 
    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date applydatetime;
@@ -32,59 +32,36 @@ public class SynnApply extends BaseEntity {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date enddate;
 
-    private Long hours;
+    private Integer hours;
 
     @Column(name="apply_type")
-    private int applytype;
+    private Integer applytype;
 
-    private int approve_user_id;
+    @Column(name="approve_user_id")
+    private Long approveuserid;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date last_update_datetime;
 
-    private int applystatus;
+    private Integer applystatus;
 
     private String applyReason;
 
     private String emails;
 
-    public String getEmails() {
-        return emails;
-    }
-
-    public void setEmails(String emails) {
-        this.emails = emails;
-    }
-
-    public int getApplytype() {
-        return applytype;
-    }
-
-    public void setApplytype(int applytype) {
-        this.applytype = applytype;
-    }
-
-    public String getApplyReason() {
-        return applyReason;
-    }
-
-    public void setApplyReason(String applyReason) {
-        this.applyReason = applyReason;
-    }
-
-    public Integer getApplyid() {
+    public Long getApplyid() {
         return applyid;
     }
 
-    public void setApplyid(Integer applyid) {
+    public void setApplyid(Long applyid) {
         this.applyid = applyid;
     }
 
-    public Integer getUserid() {
+    public Long getUserid() {
         return userid;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserid(Long userid) {
         this.userid = userid;
     }
 
@@ -112,20 +89,28 @@ public class SynnApply extends BaseEntity {
         this.enddate = enddate;
     }
 
-    public Long getHours() {
+    public Integer getHours() {
         return hours;
     }
 
-    public void setHours(Long hours) {
+    public void setHours(Integer hours) {
         this.hours = hours;
     }
 
-    public int getApprove_user_id() {
-        return approve_user_id;
+    public Integer getApplytype() {
+        return applytype;
     }
 
-    public void setApprove_user_id(int approve_user_id) {
-        this.approve_user_id = approve_user_id;
+    public void setApplytype(Integer applytype) {
+        this.applytype = applytype;
+    }
+
+    public Long getApproveuserid() {
+        return approveuserid;
+    }
+
+    public void setApproveuserid(Long approveuserid) {
+        this.approveuserid = approveuserid;
     }
 
     public Date getLast_update_datetime() {
@@ -136,11 +121,27 @@ public class SynnApply extends BaseEntity {
         this.last_update_datetime = last_update_datetime;
     }
 
-    public int getApplystatus() {
+    public Integer getApplystatus() {
         return applystatus;
     }
 
-    public void setApplystatus(int applystatus) {
+    public void setApplystatus(Integer applystatus) {
         this.applystatus = applystatus;
+    }
+
+    public String getApplyReason() {
+        return applyReason;
+    }
+
+    public void setApplyReason(String applyReason) {
+        this.applyReason = applyReason;
+    }
+
+    public String getEmails() {
+        return emails;
+    }
+
+    public void setEmails(String emails) {
+        this.emails = emails;
     }
 }
