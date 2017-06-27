@@ -11,6 +11,7 @@ import net.sppan.base.entity.SynnApply;
 import net.sppan.base.entity.SynnEmails;
 import net.sppan.base.entity.User;
 import net.sppan.base.service.IApplyService;
+import net.sppan.base.service.IChangesService;
 import net.sppan.base.service.IEmailService;
 import net.sppan.base.service.support.impl.BaseServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +38,8 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
     private ISynnApplydao iSynnApplydao;
     @Autowired
     private IEmailService iEmailService;
+    @Autowired
+    private IChangesService iChangesService;
     @Autowired
     private IUserDao iUserDao;
 
@@ -68,12 +71,15 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
     @Override
     public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp) {
         if(synnapp.getApplyid() == null) {
+            User usersend = iUserDao.findById(synnapp.getUserid().intValue());
             JSONObject json = new JSONObject();
             json.put("from",emailserviceacc);
             json.put("password",emailservicepwd);
             json.put("to", synnEmail.getSendto().replace(",",";"));
             json.put("subject", synnEmail.getSubject());
             json.put("content", synnEmail.getContent());
+            json.put("nickname",usersend.getNickName());
+            json.put("hours",synnapp.getHours());
             String result = restTemplate.postForObject(emailserviceurl, json, String.class);
             if ("success".equals(result)) {//假如是多人收件
                 if(synnEmail.getSendto().contains(",")==true){
@@ -119,12 +125,15 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
                 emails.append(";");
             }
         }
+        User usersend = iUserDao.findById(synnapp.getUserid().intValue());
         JSONObject json = new JSONObject();
         json.put("from", emailserviceacc);
         json.put("password", emailservicepwd);
         json.put("to",emails.toString());
         json.put("subject",synnEmail.get(0).getSubject());
-        json.put("content",synnEmail.get(1).getContent());
+        json.put("content",synnEmail.get(0).getContent());
+        json.put("nickname",usersend.getNickName());
+        json.put("hours",synnapp.getHours());
 
         String result = restTemplate.postForObject(emailserviceurl, json, String.class);
         if("success".equals(result)){
@@ -132,6 +141,9 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
             for(int i =0;i<synnEmail.size();i++){
                 synnEmail.get(i).setSendfrom(emailserviceacc);
                 iEmailService.save(synnEmail.get(i));
+            }
+            if(synnapp.getApplystatus()==1){  //同意则修改员工的加班日期
+                iChangesService.updateByUserId(synnapp.getHours(),synnapp.getUserid().longValue());
             }
 
         }

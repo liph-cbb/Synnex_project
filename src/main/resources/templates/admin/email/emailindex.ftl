@@ -33,9 +33,9 @@
                 </div>
                     <div class="ibox-content">
                         <p>
-                        	<@shiro.hasPermission name="system:user:add">
-                        		<button class="btn btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;编写邮件</button>
-                        	</@shiro.hasPermission>
+                        	<#--<@shiro.hasPermission name="system:user:add">-->
+                        		<button class="btn btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;查询可调休工时</button>
+                        	<#--</@shiro.hasPermission>-->
                         </p>
                         <hr>
                         <div class="row row-lg">

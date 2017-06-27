@@ -147,6 +147,7 @@ public class SynnApplyController extends BaseController {
         synnEmails_01.setSubject("加班审批");
         synnEmails_01.setSendtime(new Date());
         synnEmails_01.setSendto(user.getEmail());
+        synnEmails_01.setUserid(synnApply.getUserid());
 
         SynnEmails synnEmails_02 = new SynnEmails();
         synnEmails_02.setTouserid(synnApply.getUserid());  //发送给申请人
@@ -155,6 +156,7 @@ public class SynnApplyController extends BaseController {
         synnEmails_02.setSubject("加班审批");
         synnEmails_02.setSendtime(new Date());
         synnEmails_02.setSendto(userapply.getEmail());
+        synnEmails_02.setUserid(synnApply.getUserid());
 
         synnEmailsList.add(synnEmails_01);
         synnEmailsList.add(synnEmails_02);
