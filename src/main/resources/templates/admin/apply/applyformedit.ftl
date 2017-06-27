@@ -26,10 +26,10 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>申请加班</h5>
+                    <h5>加班申请审批</h5>
                 </div>
                 <div class="ibox-content">
-                    <p>提交成功后，将通过邮件发送上级领导</p>
+                    <p>提交成功后，将通过邮件发送下属</p>
                 </div>
             </div>
         </div>
@@ -41,13 +41,15 @@
                     <h5>完整验证表单</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/addedit">
+                    <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/addapprove">
                         <input type="hidden" id="id" name="applyid" value="${resource.applyid}" >
+                        <input type="hidden" id="userid" name="userid" value="${resource.userid}" > <!--申請人-->
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开始时间：</label>
                             <div class="col-sm-8">
                                 <input id="begindate" name="begindate" readonly="readonly"
-                                       class="laydate-icon form-control layer-date" value="${resource.begindate}">
+                                       class="laydate-icon form-control" value="${resource.begindate}">
                             </div>
                         </div>
 
@@ -56,31 +58,17 @@
                             <label class="col-sm-3 control-label">结束时间：</label>
                             <div class="col-sm-8">
                                 <input id="enddate" name="enddate" readonly="readonly"
-                                       class="laydate-icon form-control layer-date" value="${resource.enddate}">
+                                       class="laydate-icon form-control" value="${resource.enddate}">
                             </div>
                         </div>
-                    <#if resource.applyid??> <!--修改-->
                         <div class="form-group">
-                            <input type="hidden" id="id" name="email" value="${resource.emails}" >
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">加班原因说明：</label>
+                            <label class="col-sm-3 control-label">加班时长：</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="applyReason" name="applyReason" value="${resource.applyReason}" readonly="true">
-                                ${resource.applyReason}
-                                </textarea>
+                                <input id="enddate" name="hours"
+                                       class="laydate-icon form-control" value="${resource.hours}">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">审批说明：</label>
-                            <div class="col-sm-8">
-                                <textarea class="form-control" id="applyReason" name="applyReason" value="${resource.approveReason}">
-                                ${resource.approveReason}
-                                </textarea>
-                            </div>
-                        </div>
-                    <#else> <!--新增-->
-                        <div class="form-group">
+<#--                        <div class="form-group">
                             <label class="col-sm-3 control-label">发送邮箱：</label>
 
                             <div class="col-sm-8">
@@ -93,18 +81,35 @@
                                     </#list>
                                 </select>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">加班原因说明：</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="applyReason" name="applyReason" value="${resource.applyReason}">
+                                <textarea class="form-control" id="applyReason" name="applyReason" value="${resource.applyReason}" readonly="readonly">
                                 ${resource.applyReason}
                                 </textarea>
                             </div>
                         </div>
-                        </#if>
+                        <div class="from-group">
+                            <label class="col-sm-3 control-label">审批：</label>
+                            <div class="col-sm-8">
+                                <select name="applystatus" class="form-control">
+                                    <option value="0" <#if resource.applystatus == 0>selected="selected"</#if>>未审批</option>
+                                    <option value="1" <#if resource.applystatus == 1>selected="selected"</#if>>同意</option>
+                                    <option value="2" <#if resource.applystatus == 2>selected="selected"</#if>>不同意</option>
+                                </select>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">审批说明：</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" id="approveReason" name="approveReason" value="${resource.approveReason}" >
+                                ${resource.approveReason}
+                                </textarea>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
@@ -138,50 +143,15 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //外部js调用
-        /*        laydate({
-                    elem: '#birthday', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-                    event: 'focus' //响应事件。如果没有传入event，则按照默认的click
-                });*/
-        var start = {
-            elem: '#begindate',
-            format: 'YYYY/MM/DD hh:mm:ss',
-            min: laydate.now(), //设定最小日期为当前日期
-            max: '2099-06-16 23:59:59', //最大日期
-            istime: true,
-            istoday: false,
-            choose: function (datas) {
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-            }
-        };
-
-        var end = {
-            elem: '#enddate',
-            format: 'YYYY/MM/DD hh:mm:ss',
-            min: laydate.now(),
-            max: '2099-06-16 23:59:59',
-            istime: true,
-            istoday: false,
-            choose: function (datas) {
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
-        laydate(start);
-        laydate(end);
         $("#frm").validate({
             rules: {
-                begindate: {
+                applystatus: {
                     required: true
                 },
-                enddate: {
+                hours: {
                     required: true
                 },
-
-                emails: {
-                    required: true
-                },
-                applyReason: {
+                approveReason: {
                     required: true,
                     maxlength: 400
                 }
@@ -191,7 +161,7 @@
                 $.ajax({
                     type: "POST",
                     dataType: "json",
-                    url: "${ctx!}/apply/addedit",
+                    url: "${ctx!}/apply/addapprove",
                     data: $(form).serialize(),
                     success: function (msg) {
                         layer.msg(msg.message, {time: 2000}, function () {

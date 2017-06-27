@@ -25,4 +25,9 @@ public interface ISynnApplydao extends IBaseDao<SynnApply, Integer>  {
     Page<SynnApply> findAllByUserid(int searchText, Pageable pageable);
 
     Page<SynnApply> findAllByUseridOrApproveuserid(Long userid,Long touserid,Pageable pageable);
+
+    SynnApply findByApplyid(Long applyId);
+
+    int deleteByApplyid(Long applyId);
+
 }

@@ -2,6 +2,7 @@ package net.sppan.base.service;/**
  * Created by windsor on 2017/6/25.
  */
 
+import net.sppan.base.entity.Resource;
 import net.sppan.base.entity.SynnApply;
 import net.sppan.base.entity.SynnEmails;
 import net.sppan.base.entity.User;
@@ -17,8 +18,6 @@ import java.util.List;
  * @create 2017-06-25 12:22
  **/
 public interface IEmailService  extends IBaseService<SynnEmails, Integer> {
-
-    void saveOrUpdate(SynnEmails synnEmails);
     Page<SynnEmails>  findBySendfromOrSendto(String email,PageRequest pageRequest );
 
     Page<SynnEmails> findAllBySendfromOrSendto(String email,PageRequest pageRequest );
@@ -28,4 +27,10 @@ public interface IEmailService  extends IBaseService<SynnEmails, Integer> {
     Page<SynnEmails> findByToUserid(Integer integer,PageRequest pageRequest);
 
     Page<SynnEmails> findAllByUseridOrTouserid(Long userId,Long toUserId,PageRequest pageRequest);
+
+    /**
+     * 修改或者新增资源
+     * @param resource
+     */
+    void saveOrUpdate(SynnEmails SynnEmails);
 }

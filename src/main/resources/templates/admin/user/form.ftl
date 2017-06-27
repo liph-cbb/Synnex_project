@@ -58,10 +58,10 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">上级领导：</label>
                                 <div class="col-sm-8">
-                                    <select name="parent.id" class="form-control">
+                                    <select name="leaderid" class="form-control">
                                     <#list listUser as r>
-                                        <option value="${r.leaderid}">
-                                        ${r.leaderid}
+                                        <option value="${r.id}"  <#if user.leaderid == r.id>selected="selected"</#if>>
+                                        ${r.nickName}
                                         </option>
                                     </#list>
                                     </select>

@@ -127,5 +127,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements I
 		dbUser.setPassword(MD5Utils.md5(password1));
 		userDao.saveAndFlush(dbUser);
 	}
-	
+@Override
+	public User findLeaders(Integer id){
+		return userDao.findLeaders(id);
+}
+
+	@Override
+	public User findById(Integer id) {
+		return userDao.findById(id);
+	}
 }

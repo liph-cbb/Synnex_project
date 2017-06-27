@@ -63,6 +63,8 @@ public class UserController extends BaseController {
 	public String edit(@PathVariable Integer id,ModelMap map) {
 		User user = userService.find(id);
 		map.put("user", user);
+		List<User> listUser = userService.findAll();
+		map.put("listUser",listUser);
 		return "admin/user/form";
 	}
 	
@@ -93,7 +95,7 @@ public class UserController extends BaseController {
 	public String grant(@PathVariable Integer id, ModelMap map) {
 		User user = userService.find(id);
 		map.put("user", user);
-		
+
 		Set<Role> set = user.getRoles();
 		List<Integer> roleIds = new ArrayList<Integer>();
 		for (Role role : set) {

@@ -25,7 +25,7 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
 
     @Override
     public void saveOrUpdate(SynnEmails synnEmails) {
-        iEmailDao.saveAndFlush(synnEmails);
+        iEmailDao.save(synnEmails);
     }
 
     @Override

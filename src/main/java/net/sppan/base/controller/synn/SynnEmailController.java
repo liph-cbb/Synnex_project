@@ -34,8 +34,8 @@ public class SynnEmailController extends BaseController {
 
     @RequestMapping(value = {"/", "/index"})
     public String emaiidex(){
-       // return "/admin/email/emailindex";
-        return "/admin/email/mailbox";
+      return "/admin/email/emailindex";
+      //  return "/admin/email/mailbox";
     }
 
 

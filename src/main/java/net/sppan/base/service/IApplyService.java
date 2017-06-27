@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 public interface IApplyService extends IBaseService<SynnApply, Integer>{
 
@@ -19,8 +21,12 @@ public interface IApplyService extends IBaseService<SynnApply, Integer>{
 
     void saveOrUpdate(SynnApply synnApply);
 
-    public void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp, User synn_users);
+    void sendmailAndSaveinfo(SynnEmails synnEmail, SynnApply synnapp);
     Page<SynnApply> findAllByUseridOrApproveuserid(Long userid,Long touserid,PageRequest pageRequest);
+    SynnApply findByApplyid(Long applyId);
+
+     void sendmailAndApprove(List<SynnEmails> synnEmail, SynnApply synnapp);
+    int deleteByApplyid(Long applyId);
 }
 
 

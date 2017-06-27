@@ -21,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,24 +59,29 @@ public class SynnApplyController extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(ModelMap map) {
         List<User> list = iUserService.findAll();
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        User user = iUserService.find((Integer) session.getAttribute("userid"));
+        User leader= iUserService.findById(user.getLeaderid());
+        map.put("leader",leader);
         map.put("list", list);
         return "admin/apply/applyform";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable Integer id, ModelMap map) {
-        SynnApply resource =iApplyService.find(id);
+        SynnApply resource =iApplyService.findByApplyid(id.longValue());
         map.put("resource", resource);
         List<User> list = iUserService.findAll();
         map.put("list", list);
-        return "admin/apply/applyform";
+        return "admin/apply/applyformedit";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public JsonResult delete(@PathVariable Integer id,ModelMap map) {
         try {
-            iApplyService.delete(id);
+            iApplyService.deleteByApplyid(id.longValue());
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.failure(e.getMessage());
@@ -83,13 +89,13 @@ public class SynnApplyController extends BaseController {
         return JsonResult.success();
     }
 
-    @RequestMapping(value = {"/edit"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/addedit"}, method = RequestMethod.POST)
     @ResponseBody
-    public JsonResult edit(SynnApply synnApply, ModelMap map) {
+    public JsonResult addedit(SynnApply synnApply, ModelMap map) {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
-        User touser = iUserService.findByEmail(synnApply.getEmails());
+       // User touser = iUserService.findByEmail(user.getEmail());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Long hours = DateUtil.dateDiff(sdf.format(synnApply.getBegindate()), sdf.format(synnApply.getEnddate()),
                 "yyyy-MM-dd hh:mm:ss", "h");
@@ -100,10 +106,11 @@ public class SynnApplyController extends BaseController {
             synnApply.setUserid(user.getId().longValue());
             synnApply.setLast_update_datetime(new Date());
             synnApply.setApplydatetime(new Date());
+            synnApply.setApproveuserid(user.getLeaderid().longValue());
 
             SynnEmails synnEmails = new SynnEmails();
             synnEmails.setSendfrom(user.getEmail());
-            synnEmails.setTouserid(touser.getId().longValue());
+         //   synnEmails.setTouserid(touser.getId().longValue());
             synnEmails.setContent(synnApply.getApplyReason());
             synnEmails.setSendto(synnApply.getEmails());
             synnEmails.setSubject("申请加班");
@@ -111,10 +118,48 @@ public class SynnApplyController extends BaseController {
             synnEmails.setUserid(user.getId().longValue());
             synnEmails.setMailtype(0); //默认0为申请加班邮件
 
-            iApplyService.sendmailAndSaveinfo(synnEmails, synnApply, user);
+            iApplyService.sendmailAndSaveinfo(synnEmails, synnApply);
         } catch (Exception e) {
             return JsonResult.failure(e.getMessage());
         }
+        return JsonResult.success();
+    }
+
+
+    @RequestMapping(value = {"/addapprove"}, method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult addapprove(SynnApply synnApply, ModelMap map){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        User user = iUserService.find((Integer) session.getAttribute("userid"));
+        User userapply = iUserService.find(synnApply.getUserid().intValue());
+        SynnApply synnApply_new  = iApplyService.findByApplyid(synnApply.getApplyid());
+        synnApply_new.setApplystatus(synnApply.getApplystatus());
+        synnApply_new.setApproveReason(synnApply.getApproveReason());
+        synnApply_new.setHours(synnApply.getHours());
+        synnApply_new.setLast_update_datetime(new Date());
+
+        List<SynnEmails> synnEmailsList = new ArrayList<SynnEmails>();
+        SynnEmails synnEmails_01 = new SynnEmails();
+        synnEmails_01.setTouserid(user.getId().longValue());  //发送给审批人
+        synnEmails_01.setContent(synnApply.getApproveReason());
+        synnEmails_01.setMailtype(1); //1为审批加班邮件
+        synnEmails_01.setSubject("加班审批");
+        synnEmails_01.setSendtime(new Date());
+        synnEmails_01.setSendto(user.getEmail());
+
+        SynnEmails synnEmails_02 = new SynnEmails();
+        synnEmails_02.setTouserid(synnApply.getUserid());  //发送给申请人
+        synnEmails_02.setContent(synnApply.getApproveReason());
+        synnEmails_02.setMailtype(1); //1为审批加班邮件
+        synnEmails_02.setSubject("加班审批");
+        synnEmails_02.setSendtime(new Date());
+        synnEmails_02.setSendto(userapply.getEmail());
+
+        synnEmailsList.add(synnEmails_01);
+        synnEmailsList.add(synnEmails_02);
+
+        iApplyService.sendmailAndApprove(synnEmailsList,synnApply_new);
         return JsonResult.success();
     }
 }

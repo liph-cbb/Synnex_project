@@ -55,4 +55,8 @@ public interface IUserService extends IBaseService<User, Integer> {
 	 */
 	void updatePwd(User user, String oldPassword, String password1, String password2);
 
+
+	User findLeaders(Integer id);
+
+	User findById(Integer id);
 }

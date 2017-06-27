@@ -107,6 +107,7 @@ public class User extends BaseEntity {
 
     @Transient
 	private String leadername;
+
 	@ManyToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinTable(name = "tb_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	private java.util.Set<Role> roles;
