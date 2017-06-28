@@ -75,6 +75,7 @@ public class MyRealm extends AuthorizingRealm {
 		
 		String password = new String((char[]) token.getCredentials());
 
+		
 		// 账号不存在
 		if (user == null) {
 			throw new UnknownAccountException("账号或密码不正确");

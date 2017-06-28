@@ -16,14 +16,13 @@ public class MD5Utils {
 	 * @return md5后的密文
 	 */
 	public static String md5(String input) {
-		byte[] code = null;
-        try {
-            code = MessageDigest.getInstance("md5").digest(input.getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            code = input.getBytes();
-        }
-        BigInteger bi = new BigInteger(code);
-        return bi.abs().toString(32).toUpperCase();
+		// String s = new String(inStr);
+		char [] a = input.toCharArray();
+		for  ( int  i =  0 ; i < a.length; i++) {
+			a[i] = (char ) (a[i] ^  't' );
+		}
+		String s = new  String(a);
+		return  s;
 	}
 	
 	/**
@@ -40,7 +39,17 @@ public class MD5Utils {
 		return md5(salt + md5(input));
 	}
 
+	public static String convertMD5(String inStr) {
+		char [] a = inStr.toCharArray();
+		for  ( int  i =  0 ; i < a.length; i++) {
+			a[i] = (char ) (a[i] ^  't' );
+		}
+		String k = new  String(a);
+		return  k;
+	}
+
 	public static void main(String[] args) {
+
 		System.out.println(md5("111111"));
 
 

@@ -41,10 +41,7 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
 
     @Value("${email.service.query}")
     private String service_query_url;
-    @Value("${system.email.account}")
-    private String emailserviceacc;
-    @Value("${system.email.passwd}")
-    private String emailservicepwd;
+
 
     @Override
     public void saveOrUpdate(SynnEmails synnEmails) {
@@ -66,8 +63,8 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
         }
         //默认给系统发送邮件
         JSONObject json = new JSONObject();
-        json.put("from",emailserviceacc);
-        json.put("password",emailservicepwd);
+        json.put("from",usersend.getEmail());
+        json.put("password",usersend.getPassword());
         json.put("to",usersend.getEmail());
         json.put("subject", "系统查询邮件");
         json.put("content", "请查询本人加班和换休时间");

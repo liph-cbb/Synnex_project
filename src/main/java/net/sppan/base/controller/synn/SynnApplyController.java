@@ -177,6 +177,7 @@ public class SynnApplyController extends BaseController {
                 }
             }
 
+
             SynnApply synnApply_new = iApplyService.findByApplyid(synnApply.getApplyid());
             synnApply_new.setApplystatus(synnApply.getApplystatus());
             synnApply_new.setApproveReason(synnApply.getApproveReason());
@@ -202,6 +203,10 @@ public class SynnApplyController extends BaseController {
             synnEmails_02.setSendtime(new Date());
             synnEmails_02.setSendto(userapply.getEmail());
             synnEmails_02.setUserid(synnApply.getUserid());
+
+
+
+
 
             synnEmailsList.add(synnEmails_01);
             synnEmailsList.add(synnEmails_02);

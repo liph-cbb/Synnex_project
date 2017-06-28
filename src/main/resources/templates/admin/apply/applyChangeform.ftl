@@ -43,7 +43,7 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/addedit">
                         <input type="hidden" id="applyid" name="applyid" value="${resource.applyid}" >
-                        <input type="hidden" id="approvetype" name="applytype" value="${resource.applytype}">
+                        <input type="hidden" id="approvetype" name="applytype" value="1">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开始时间：</label>
                             <div class="col-sm-8">

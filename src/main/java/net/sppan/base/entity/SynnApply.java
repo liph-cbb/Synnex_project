@@ -1,11 +1,8 @@
 package net.sppan.base.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.sun.xml.internal.rngom.parse.host.Base;
 import net.sppan.base.entity.support.BaseEntity;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**

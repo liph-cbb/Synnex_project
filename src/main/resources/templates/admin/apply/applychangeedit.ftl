@@ -44,7 +44,7 @@
                     <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/addapprove">
                         <input type="hidden" id="id" name="applyid" value="${resource.applyid}" >
                         <input type="hidden" id="userid" name="userid" value="${resource.userid}" >
-                        <input type="hidden" id="applytype" name="applytype" value="${resource.applytype}">
+                        <input type="hidden" id="applytype" name="applytype" value="1">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开始时间：</label>

@@ -96,12 +96,12 @@
     	      password1: {
     	        required: true,
     	        minlength: 4,
-    	    	maxlength: 10
+    	    	maxlength: 20
     	      },
     	      password2: {
     	        required: true,
     	        minlength: 4,
-    	    	maxlength: 10
+    	    	maxlength: 20
     	      }
     	    },
     	    messages: {},
