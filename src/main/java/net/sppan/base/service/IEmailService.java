@@ -33,4 +33,9 @@ public interface IEmailService  extends IBaseService<SynnEmails, Integer> {
      * @param resource
      */
     void saveOrUpdate(SynnEmails SynnEmails);
+
+    /**
+     * 查询邮件发送
+     */
+    String sendQueryMessage(Long userId);
 }

@@ -36,6 +36,10 @@
                         	<@shiro.hasPermission name="apply:index:add">
                         		<button class="btn btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;加班申请</button>
                         	</@shiro.hasPermission>
+
+						<@shiro.hasPermission name="apply:index:add">
+                            <button class="btn btn-success " type="button" onclick="addchanges();"><i class="fa fa-plus"></i>&nbsp;调休申请</button>
+						</@shiro.hasPermission>
                         </p>
                         <hr>
                         <div class="row row-lg">
@@ -140,15 +144,15 @@
 			        field: "applydatetime",
 			        sortable: true
 			    },{
-			        title: "加班开始时间",
+			        title: "加班/调休开始时间",
 			        field: "begindate",
 			        sortable: true
 			    },{
-                    title: "加班结束时间",
+                    title: "加班/调休结束时间",
                     field: "enddate",
                     sortable: true
                 },{
-                    title: "加班时长(小时)",
+                    title: "加班/调休时长(小时)",
                     field: "hours",
                     sortable: true
                 },
@@ -179,19 +183,31 @@
         	    });
         }
         function add(){
-        	layer.open({
-        	      type: 2,
-        	      title: '加班申请',
-        	      shadeClose: true,
-        	      shade: false,
-        	      area: ['893px', '600px'],
-        	      content: '${ctx!}/apply/add',
-        	      end: function(index){
-        	    	  $('#table_list').bootstrapTable("refresh");
-       	    	  }
-        	    });
+            layer.open({
+                type: 2,
+                title: '加班申请',
+                shadeClose: true,
+                shade: false,
+                area: ['893px', '600px'],
+                content: '${ctx!}/apply/add',
+                end: function(index){
+                    $('#table_list').bootstrapTable("refresh");
+                }
+            });
         }
-
+        function addchanges(){
+            layer.open({
+                type: 2,
+                title: '调休申请',
+                shadeClose: true,
+                shade: false,
+                area: ['893px', '600px'],
+                content: '${ctx!}/apply/addchanges',
+                end: function(index){
+                    $('#table_list').bootstrapTable("refresh");
+                }
+            });
+        }
         function del(applyid){
         	layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
         		$.ajax({

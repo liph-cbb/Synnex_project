@@ -142,15 +142,21 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
                 synnEmail.get(i).setSendfrom(emailserviceacc);
                 iEmailService.save(synnEmail.get(i));
             }
-            if(synnapp.getApplystatus()==1){  //同意则修改员工的加班日期
-                iChangesService.updateByUserId(synnapp.getHours(),synnapp.getUserid().longValue());
+            if(synnapp.getApplystatus()==1){  //同意则修改员工change表，加班申请累加，调休申请减
+                iChangesService.updateByUserId(synnapp.getApplytype()==0?synnapp.getHours():-synnapp.getHours(),synnapp.getUserid().longValue());
             }
-
         }
     }
     public int deleteByApplyid(Long applyId){
         return iSynnApplydao.deleteByApplyid(applyId);
     }
+
+    @Override
+    public int findUsersCount(Long userId, Integer applytype) {
+        return iSynnApplydao.findUsersCount(userId,applytype);
+    }
+
+
 
     @Override
     public IBaseDao<SynnApply, Integer> getBaseDao() {

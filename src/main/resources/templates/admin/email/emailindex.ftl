@@ -34,7 +34,7 @@
                     <div class="ibox-content">
                         <p>
                         	<#--<@shiro.hasPermission name="system:user:add">-->
-                        		<button class="btn btn-success " type="button" onclick="add();"><i class="fa fa-plus"></i>&nbsp;查询可调休工时</button>
+                        		<button class="btn btn-success " type="button" onclick="queryHours();"><i class="fa fa-plus"></i>&nbsp;查询可调休工时</button>
                         	<#--</@shiro.hasPermission>-->
                         </p>
                         <hr>
@@ -157,18 +157,19 @@
        	    	  }
         	    });
         }
-        function add(){
-        	layer.open({
-        	      type: 2,
-        	      title: '编写邮件',
-        	      shadeClose: true,
-        	      shade: false,
-        	      area: ['893px', '600px'],
-        	      content: '${ctx!}/apply/add',
-        	      end: function(index){
-        	    	  $('#table_list').bootstrapTable("refresh");
-       	    	  }
-        	    });
+
+        function queryHours(){
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "${ctx!}/email/queryhour",
+                    success: function(msg){
+                        layer.msg(msg.message, {time: 2000},function(){
+                            $('#table_list').bootstrapTable("refresh");
+                            layer.close(index);
+                        });
+                    }
+                });
         }
 
         function del(applyid){

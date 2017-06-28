@@ -26,7 +26,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>加班申请审批</h5>
+                    <h5>调休申请审批</h5>
                 </div>
                 <div class="ibox-content">
                     <p>提交成功后，将通过邮件发送下属</p>
@@ -43,7 +43,8 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/addapprove">
                         <input type="hidden" id="id" name="applyid" value="${resource.applyid}" >
-                        <input type="hidden" id="userid" name="userid" value="${resource.userid}" > <!--申請人-->
+                        <input type="hidden" id="userid" name="userid" value="${resource.userid}" >
+                        <input type="hidden" id="applytype" name="applytype" value="${resource.applytype}">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开始时间：</label>
@@ -68,23 +69,9 @@
                                        class="form-control" value="${resource.hours}">
                             </div>
                         </div>
-<#--                        <div class="form-group">
-                            <label class="col-sm-3 control-label">发送邮箱：</label>
-
-                            <div class="col-sm-8">
-                                <select name="emails" id="emails" class="selectpicker show-tick form-control" multiple
-                                        data-live-search="false" value="${resource.emails}">
-                                    <#list list as r>
-                                        <option value="${r.email}"   <#if leader.id == r.id>selected="selected"</#if> >
-                                        ${r.nickName}
-                                        </option>
-                                    </#list>
-                                </select>
-                            </div>
-                        </div>-->
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">加班原因说明：</label>
+                            <label class="col-sm-3 control-label">调休原因说明：</label>
                             <div class="col-sm-8">
                                 <textarea class="form-control" style="text-align: left" id="applyReason" name="applyReason" value="${resource.applyReason}" readonly="readonly">${resource.applyReason}
                                 </textarea>

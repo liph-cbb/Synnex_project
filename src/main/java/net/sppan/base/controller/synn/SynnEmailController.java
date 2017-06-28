@@ -2,6 +2,7 @@ package net.sppan.base.controller.synn;/**
  * Created by windsor on 2017/6/25.
  */
 
+import net.sppan.base.common.JsonResult;
 import net.sppan.base.controller.BaseController;
 import net.sppan.base.entity.SynnApply;
 import net.sppan.base.entity.SynnEmails;
@@ -37,7 +38,20 @@ public class SynnEmailController extends BaseController {
       return "/admin/email/emailindex";
       //  return "/admin/email/mailbox";
     }
+    @RequestMapping(value = "/queryhour")
+    @ResponseBody
+    public JsonResult queryhour(){
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            Session session = subject.getSession();
+            User user = iUserService.find((Integer) session.getAttribute("userid"));
+            String result = iEmailService.sendQueryMessage(user.getId().longValue());
+        }catch (Exception e){
+            return JsonResult.failure("查询邮件失败，请联系管理员");
+        }
+         return JsonResult.success();
 
+    }
 
     @RequestMapping("/list")
     @ResponseBody

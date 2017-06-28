@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,5 +30,8 @@ public interface ISynnApplydao extends IBaseDao<SynnApply, Integer>  {
     SynnApply findByApplyid(Long applyId);
 
     int deleteByApplyid(Long applyId);
+
+    @Query(value = "select count(1) from tb_apply where user_id=?1 and apply_type=?2 and applystatus=1 ", nativeQuery = true)
+    int findUsersCount(Long userId,Integer applytype);
 
 }

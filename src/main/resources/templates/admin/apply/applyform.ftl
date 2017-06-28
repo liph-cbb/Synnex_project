@@ -43,6 +43,7 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/addedit">
                         <input type="hidden" id="id" name="applyid" value="${resource.applyid}" >
+                        <input type="hidden" id="applytype" name="applytype" value="0"> <!--默认为调休申请-->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">开始时间：</label>
                             <div class="col-sm-8">
@@ -98,9 +99,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">加班原因说明：</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="applyReason" name="applyReason" value="${resource.applyReason}">
-                                ${resource.applyReason}
-                                </textarea>
+                                <textarea class="form-control" id="applyReason" name="applyReason" value="${resource.applyReason}">${resource.applyReason}</textarea>
                             </div>
                         </div>
                         </#if>

@@ -2,7 +2,8 @@ package net.sppan.base.service;/**
  * Created by windsor on 2017/6/24.
  */
 
-import net.sppan.base.entity.*;
+import net.sppan.base.entity.SynnApply;
+import net.sppan.base.entity.SynnEmails;
 import net.sppan.base.service.support.IBaseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +27,11 @@ public interface IApplyService extends IBaseService<SynnApply, Integer>{
     SynnApply findByApplyid(Long applyId);
 
      void sendmailAndApprove(List<SynnEmails> synnEmail, SynnApply synnapp);
+
     int deleteByApplyid(Long applyId);
+
+    int findUsersCount(Long userId, Integer applytype);
+
 }
 
 
