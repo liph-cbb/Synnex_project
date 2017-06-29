@@ -46,11 +46,12 @@ public class SynnApplyController extends BaseController {
     @RequestMapping("/list")
     @ResponseBody
     public Page<SynnApply> list(
-            @RequestParam(value = "searchText", required = false) String searchText
+            @RequestParam(value = "searchText", required = false) String searchText,ModelMap map
     ) {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
+        map.put("userid",user.getId());
         // Page<SynnApply> page = iApplyService.findAllByUserid(user.getId(), getPageRequest());
         Page<SynnApply> page = iApplyService.findAllByUseridOrApproveuserid(user.getId().longValue(), user.getId().longValue(), getPageRequest());
         return page;
