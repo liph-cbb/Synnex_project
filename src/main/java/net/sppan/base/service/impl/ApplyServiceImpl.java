@@ -111,6 +111,21 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
             json.put("content", synnEmail.getContent());
             json.put("nickname",usersend.getNickName());
             json.put("hours",synnapp.getHours());
+            String approveStatus ="";
+            //审批状态：0=未审批 1=已审批 2 拒绝
+            switch(synnapp.getApplystatus()){
+                case 0:
+                    approveStatus="未审批";
+                    break;
+                case 1:
+                    approveStatus="已审批";
+                    break;
+                case 2:
+                    approveStatus="被拒绝";
+                    break;
+            }
+
+            json.put("approveStatus",approveStatus);
             String result = restTemplate.postForObject(emailserviceurl, json, String.class);
         }else{
             update(synnapp);
@@ -128,7 +143,7 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
     }
 
     /**
-     * 经理审批员工申请，申请成功后
+     * 经理审批员工申请，审批后邮箱发送邮件提醒
      * 邮箱发送成功之后，本地数据库更新相关信息
      * @param synnEmail
      * @param synnapp
@@ -136,18 +151,19 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
     @Override
     public void sendmailAndApprove(List<SynnEmails> synnEmail, SynnApply synnapp) {
         User usersend = iUserDao.findById(synnapp.getUserid().intValue());
-        //更新申请状态，更新邮件列表，更新员工换休时间表
+        /*更新申请状态*/
         update(synnapp);
         //获取员工换休加班信息
-        int overtimehour = iSynnApplydao.findUsersCount(synnapp.getUserid(),0);
-        int askforleave = iSynnApplydao.findUsersCount(synnapp.getUserid(),1);
+        int overtimehour = iSynnApplydao.findUsersCount(synnapp.getUserid(), 0);
+        int askforleave = iSynnApplydao.findUsersCount(synnapp.getUserid(), 1);
         SynnChangeHours changeHours = iChangesService.findByUserid(synnapp.getUserid().longValue());
         int restHours = 0;
-        if(changeHours == null){
-            restHours =0;
-        }else{
+        if (changeHours == null) {
+            restHours = 0;
+        } else {
             restHours = iChangesService.findByUserid(usersend.getId().longValue()).getHours();
         }
+
         JSONObject json = new JSONObject();
         json.put("from", synnEmail.get(0).getSendfrom());
         json.put("password",MD5Utils.convertMD5(usersend.getPassword()));
@@ -159,15 +175,30 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
         json.put("overtimehour",overtimehour);
         json.put("askforleave",askforleave);
         json.put("restHours",restHours);
-        json.put("system","system");//此标注为需要发送系统邮件
+        String approveStatus ="";
+        //审批状态：0=未审批 1=已审批 2 拒绝
+        switch(synnapp.getApplystatus()){
+            case 0:
+                approveStatus="未审批";
+                break;
+            case 1:
+                approveStatus="已审批";
+                break;
+            case 2:
+                approveStatus="被拒绝";
+                break;
+        }
+        json.put("approveStatus",approveStatus);
 
-        if(synnapp.getApplystatus()==1 ){  //1。同意则修改员工change表，加班申请累加，调休申请减 2。发送审批邮件
+        if(synnapp.getApplystatus()==1 ){  //1。同意则修改员工change表，加班申请累加，调休申请减
+            json.put("system", "system");
+            iChangesService.updateByUserId(synnapp.getApplytype()==0?synnapp.getHours():-synnapp.getHours(),synnapp.getUserid().longValue());
+        }
+        if(synnapp.getApplystatus()!=0) {
             for(int i =0;i<synnEmail.size();i++){
-             //   synnEmail.get(i).setSendfrom(usersend.getEmail());
                 iEmailService.save(synnEmail.get(i));
             }
-            iChangesService.updateByUserId(synnapp.getApplytype()==0?synnapp.getHours():-synnapp.getHours(),synnapp.getUserid().longValue());
-            String result = restTemplate.postForObject(emailserviceurl, json, String.class);
+            restTemplate.postForObject(emailserviceurl, json, String.class);
         }
     }
     public int deleteByApplyid(Long applyId){

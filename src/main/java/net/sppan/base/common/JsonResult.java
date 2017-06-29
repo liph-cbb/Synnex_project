@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Json 统一返回消息类
  * 
- * @author SPPan
+ * @author windsor
  *
  */
 public class JsonResult implements Serializable {

@@ -26,9 +26,6 @@ import net.sppan.base.vo.ZtreeView;
  * <p>
  * 资源表 服务实现类
  * </p>
- *
- * @author SPPan
- * @since 2016-12-28
  */
 @Service
 public class ResourceServiceImpl extends BaseServiceImpl<Resource, Integer>

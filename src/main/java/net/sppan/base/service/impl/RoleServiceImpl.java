@@ -26,8 +26,7 @@ import net.sppan.base.service.support.impl.BaseServiceImpl;
  * 角色表  服务实现类
  * </p>
  *
- * @author SPPan
- * @since 2016-12-28
+ * @author windsor
  */
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<Role, Integer> implements IRoleService {

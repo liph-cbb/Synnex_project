@@ -133,7 +133,7 @@
                         	return '<span class="label label-info">加班邮件</span>';
                         if (value == '3')
                             return '<span class="label label-inverse">系统查询邮件</span>';
-                        return '<span class="label label-inverse">调休邮件</span>';
+                        return '<span class="label label-default">调休邮件</span>';
                     }
 			    },{
 			        title: "发送时间",

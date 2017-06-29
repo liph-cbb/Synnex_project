@@ -68,9 +68,9 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
             if(list.get(i).getContent() == null){
                 list.get(i).setContent("<h5>你好："+usersend.getNickName()+"</h5>"+
                         "以下是你的加班和换休工时信息"+
-                               "<p>你总共的加班时间为："+overtimehour+"</p>"+
-                               " <p>你曾经总共的换休时间为："+askforleave+"</p>"+
-                                 "<p>你目前所剩的可换休时间为："+restHours+"</p>)");
+                               "<p>你总共的加班时间为："+overtimehour+"小时</p>"+
+                               " <p>你曾经总共的换休时间为："+askforleave+"小时</p>"+
+                                 "<p>你目前所剩的可换休时间为："+restHours+"小时</p>)");
             }
             iEmailDao.save(list.get(i));
         }

@@ -18,16 +18,26 @@ public class SynnEmails  extends BaseEntity {
     @Column(name="emailId")
     private Long id;
     private Long userid;
+    @Column(name="touserid")
     private Long touserid;
     private String sendfrom;
     private String sendto;
     private String subject;
     private String content;
+    private Integer approvestatus;
 
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date sendtime = new Date();
 
     private Integer mailtype;
+
+    public Integer getApprovestatus() {
+        return approvestatus;
+    }
+
+    public void setApprovestatus(Integer approvestatus) {
+        this.approvestatus = approvestatus;
+    }
 
     public Long getId() {
         return id;
