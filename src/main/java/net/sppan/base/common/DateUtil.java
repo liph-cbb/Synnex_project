@@ -66,7 +66,6 @@ public class DateUtil {
         System.out.println(dateDiff("2017-06-25 00:00:00",
                 "2017-06-25 23:00:00","yyyy-MM-dd hh:mm:ss","h"
                 ));
-        System.out.println("abcdeft".contains("addd"));
-        System.out.println("abcdeft".replace("k","1231"));
+
     }
 }

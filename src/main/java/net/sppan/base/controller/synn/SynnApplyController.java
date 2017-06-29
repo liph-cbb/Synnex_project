@@ -1,11 +1,11 @@
-package net.sppan.base.controller.synn;/**
- * Created by windsor on 2017/6/24.
- */
-
+package net.sppan.base.controller.synn;
 import net.sppan.base.common.DateUtil;
 import net.sppan.base.common.JsonResult;
 import net.sppan.base.controller.BaseController;
-import net.sppan.base.entity.*;
+import net.sppan.base.entity.SynnApply;
+import net.sppan.base.entity.SynnChangeHours;
+import net.sppan.base.entity.SynnEmails;
+import net.sppan.base.entity.User;
 import net.sppan.base.service.IApplyService;
 import net.sppan.base.service.IChangesService;
 import net.sppan.base.service.IUserService;
@@ -15,9 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -77,13 +75,6 @@ public class SynnApplyController extends BaseController {
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
         User leader= iUserService.findById(user.getLeaderid());
-//        SynnChangeHours changeHours = iChangesService.findByUserid(user.getId().longValue());
-//        int hours  = changeHours.getHours();
-//        List hoursList = new ArrayList();
-//        for(int i =1;i<=hoursList.size()+1;i++){
-//            hoursList.add(i);
-//        }
-//        map.put("hoursList",hoursList);
         map.put("leader",leader);
         map.put("list", list);
         return "admin/apply/applyChangeform";
@@ -119,8 +110,7 @@ public class SynnApplyController extends BaseController {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = iUserService.find((Integer) session.getAttribute("userid"));
-       // User touser = iUserService.findByEmail(user.getEmail());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//24小时制
         Long hours = DateUtil.dateDiff(sdf.format(synnApply.getBegindate()), sdf.format(synnApply.getEnddate()),
                 "yyyy-MM-dd hh:mm:ss", "h");
 

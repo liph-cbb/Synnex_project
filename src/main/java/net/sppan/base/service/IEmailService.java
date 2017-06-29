@@ -18,13 +18,6 @@ import java.util.List;
  * @create 2017-06-25 12:22
  **/
 public interface IEmailService  extends IBaseService<SynnEmails, Integer> {
-    Page<SynnEmails>  findBySendfromOrSendto(String email,PageRequest pageRequest );
-
-    Page<SynnEmails> findAllBySendfromOrSendto(String email,PageRequest pageRequest );
-
-    Page<SynnEmails> findByUserid(Integer integer,PageRequest pageRequest);
-
-    Page<SynnEmails> findByToUserid(Integer integer,PageRequest pageRequest);
 
     Page<SynnEmails> findAllByUseridOrTouserid(Long userId,Long toUserId,PageRequest pageRequest);
 
@@ -37,5 +30,5 @@ public interface IEmailService  extends IBaseService<SynnEmails, Integer> {
     /**
      * 查询邮件发送
      */
-    String sendQueryMessage(Long userId);
+    String sendQueryMessage(Long userId,List<SynnEmails> list);
 }

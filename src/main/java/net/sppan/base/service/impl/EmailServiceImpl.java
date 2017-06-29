@@ -22,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 /**
  * @author 李杨洲
  * @create 2017-06-25 12:24
@@ -50,7 +52,7 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
     }
 
     @Override
-    public String sendQueryMessage(Long userId) {
+    public String sendQueryMessage(Long userId,List<SynnEmails> list) {
         User usersend = iUserService.findById(userId.intValue());
         //查询用户本身已经申请加班批准的时间数
         int overtimehour = iApplyService.findUsersCount(usersend.getId().longValue(),0);
@@ -61,6 +63,16 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
             restHours =0;
         }else{
             restHours = changesService.findByUserid(usersend.getId().longValue()).getHours();
+        }
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getContent() == null){
+                list.get(i).setContent("<h5>你好："+usersend.getNickName()+"</h5>"+
+                        "以下是你的加班和换休工时信息"+
+                               "<p>你总共的加班时间为："+overtimehour+"</p>"+
+                               " <p>你曾经总共的换休时间为："+askforleave+"</p>"+
+                                 "<p>你目前所剩的可换休时间为："+restHours+"</p>)");
+            }
+            iEmailDao.save(list.get(i));
         }
         //默认给系统发送邮件
         JSONObject json = new JSONObject();
@@ -77,25 +89,7 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
         return result;
     }
 
-    @Override
-    public Page<SynnEmails> findBySendfromOrSendto(String email, PageRequest pageRequest) {
-        return iEmailDao.findBySendfromOrSendto(email,pageRequest);
-    }
 
-    @Override
-    public Page<SynnEmails> findAllBySendfromOrSendto(String email, PageRequest pageRequest) {
-        return iEmailDao.findAllBySendfromOrSendto(email,pageRequest);
-    }
-
-    @Override
-    public Page<SynnEmails> findByUserid(Integer integer, PageRequest pageRequest) {
-        return iEmailDao.findByUserid(integer,pageRequest);
-    }
-
-    @Override
-    public Page<SynnEmails> findByToUserid(Integer integer, PageRequest pageRequest) {
-        return iEmailDao.findByTouserid(integer,pageRequest);
-    }
 
     @Override
     public Page<SynnEmails> findAllByUseridOrTouserid(Long userId,Long toUserId,PageRequest pageRequest){

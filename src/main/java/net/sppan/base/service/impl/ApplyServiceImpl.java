@@ -135,17 +135,9 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
      */
     @Override
     public void sendmailAndApprove(List<SynnEmails> synnEmail, SynnApply synnapp) {
-//        StringBuffer emails = new StringBuffer("");
-//        for(int i =0;i<synnEmail.size();i++){
-//            emails.append(synnEmail.get(i).getSendto());
-//            if(i!=synnEmail.size()-1){
-//                emails.append(";");
-//            }
-//        }
         User usersend = iUserDao.findById(synnapp.getUserid().intValue());
         //更新申请状态，更新邮件列表，更新员工换休时间表
         update(synnapp);
-
         //获取员工换休加班信息
         int overtimehour = iSynnApplydao.findUsersCount(synnapp.getUserid(),0);
         int askforleave = iSynnApplydao.findUsersCount(synnapp.getUserid(),1);
