@@ -117,8 +117,15 @@
 			        sortable: true
 			    },{
 			        title: "发件人",
-			        field: "userid"
+			        field: "sendfrom"
 			    },{
+                    title: "收件人",
+                    field: "sendto"
+                }, {
+                        title: "主题",
+                        field: "subject"
+                    },
+					{
 			        title: "类型",
 			        field: "mailtype",
 			        formatter: function (value, row, index) {
@@ -130,7 +137,7 @@
 			        title: "发送时间",
 			        field: "sendtime",
 			        sortable: true
-			    },
+			    }/*,
 					{
 			        title: "操作",
 			        field: "empty",
@@ -140,7 +147,7 @@
 
                         return operateHtml;
                     }
-			    }]
+			    }*/]
 			});
         });
         

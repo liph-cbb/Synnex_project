@@ -176,9 +176,10 @@ public class SynnApplyController extends BaseController {
                     return JsonResult.failure("超过可调休工时,请重新填写");
                 }
             }
-
-
             SynnApply synnApply_new = iApplyService.findByApplyid(synnApply.getApplyid());
+            if(synnApply_new.getApplystatus() == 1){
+                return JsonResult.failure("此邮件已经审批过，不能进行修改");
+            }
             synnApply_new.setApplystatus(synnApply.getApplystatus());
             synnApply_new.setApproveReason(synnApply.getApproveReason());
             synnApply_new.setHours(synnApply.getHours());
@@ -186,30 +187,43 @@ public class SynnApplyController extends BaseController {
 
             String subjects = (synnApply.getApplytype() == 0 ? "申请加班审批结果" : "申请调休审批结果");
             List<SynnEmails> synnEmailsList = new ArrayList<SynnEmails>();
+
+            //审批人回复邮件
+            SynnEmails synnEmails_03 = new SynnEmails();
+            synnEmails_03.setSendfrom(user.getEmail());
+            synnEmails_03.setTouserid(user.getId().longValue());  //发送给审批人
+            synnEmails_03.setContent(synnApply.getApproveReason());
+            synnEmails_03.setMailtype(synnApply.getApplytype());
+            synnEmails_03.setSubject(subjects);
+            synnEmails_03.setSendtime(new Date());
+            synnEmails_03.setSendto(userapply.getEmail());
+            synnEmails_03.setUserid(synnApply.getUserid());
+
+            //系统邮件
             SynnEmails synnEmails_01 = new SynnEmails();
+            synnEmails_01.setSendfrom("系统邮箱");
             synnEmails_01.setTouserid(user.getId().longValue());  //发送给审批人
             synnEmails_01.setContent(synnApply.getApproveReason());
             synnEmails_01.setMailtype(synnApply.getApplytype());
-            synnEmails_01.setSubject(subjects);
+            synnEmails_01.setSubject("系统邮件");
             synnEmails_01.setSendtime(new Date());
             synnEmails_01.setSendto(user.getEmail());
             synnEmails_01.setUserid(synnApply.getUserid());
 
             SynnEmails synnEmails_02 = new SynnEmails();
+            synnEmails_02.setSendfrom("系统邮箱");
             synnEmails_02.setTouserid(synnApply.getUserid());  //发送给申请人
             synnEmails_02.setContent(synnApply.getApproveReason());
             synnEmails_02.setMailtype(synnApply.getApplytype()); //1为审批加班邮件
-            synnEmails_02.setSubject(subjects);
+            synnEmails_02.setSubject("系统邮件");
             synnEmails_02.setSendtime(new Date());
             synnEmails_02.setSendto(userapply.getEmail());
             synnEmails_02.setUserid(synnApply.getUserid());
 
-
-
-
-
+            synnEmailsList.add(synnEmails_03);
             synnEmailsList.add(synnEmails_01);
             synnEmailsList.add(synnEmails_02);
+
 
             iApplyService.sendmailAndApprove(synnEmailsList, synnApply_new);
         }catch (Exception e){

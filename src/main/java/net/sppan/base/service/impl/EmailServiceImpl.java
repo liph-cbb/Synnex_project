@@ -3,6 +3,7 @@ package net.sppan.base.service.impl;/**
  */
 
 import com.alibaba.fastjson.JSONObject;
+import net.sppan.base.common.utils.MD5Utils;
 import net.sppan.base.dao.IEmailDao;
 import net.sppan.base.dao.support.IBaseDao;
 import net.sppan.base.entity.SynnChangeHours;
@@ -64,7 +65,7 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
         //默认给系统发送邮件
         JSONObject json = new JSONObject();
         json.put("from",usersend.getEmail());
-        json.put("password",usersend.getPassword());
+        json.put("password", MD5Utils.convertMD5(usersend.getPassword()));
         json.put("to",usersend.getEmail());
         json.put("subject", "系统查询邮件");
         json.put("content", "请查询本人加班和换休时间");
@@ -73,9 +74,6 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
         json.put("askforleave",askforleave);
         json.put("restHours",restHours);
         String result = restTemplate.postForObject(service_query_url, json, String.class);
-        if ("success".equals(result)) {
-            //邮箱信息通过API拉去还是插入表中
-        }
         return result;
     }
 

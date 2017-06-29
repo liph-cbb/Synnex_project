@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">加班时长：</label>
+                            <label class="col-sm-3 control-label">调休时长：</label>
                             <div class="col-sm-8">
                                 <input id="enddate" name="hours"
                                        class="form-control" value="${resource.hours}">

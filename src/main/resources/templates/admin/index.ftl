@@ -64,7 +64,7 @@
                         <ul class="nav nav-second-level">
                         <@shiro.hasPermission name="apply:index">
                             <li>
-                                <a class="J_menuItem" href="${ctx!}/apply/index">加班/调休申请/审批</a>
+                                <a class="J_menuItem" href="${ctx!}/apply/index">加班/调休/申请/审批</a>
                             </li>
                         </@shiro.hasPermission>
                         <@shiro.hasPermission name="email:index">
