@@ -128,8 +128,11 @@
 			        field: "applystatus",
                     formatter: function (value, row, index) {
                         if (value == '0') 
-                        	return '<span class="label label-danger">未审批</span>';
-                        return '<span class="label label-info">已审批</span>';
+                        	return '<span class="label label-important">未审批</span>';
+                        if (value == '1')
+                            return '<span class="label label-success">审批通过</span>';
+                        if (value == '2')
+                            return '<span class="label label-danger">被拒绝</span>';
                     }
 			    },{
 			        title: "类型",
