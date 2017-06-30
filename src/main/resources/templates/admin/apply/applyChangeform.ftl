@@ -38,7 +38,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>完整验证表单</h5>
+                    <h5></h5>
                 </div>
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="frm" method="post" action="${ctx!}/apply/addedit">

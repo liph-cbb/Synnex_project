@@ -48,6 +48,7 @@ public class SynnApply extends BaseEntity {
 
     private String emails;
 
+
     public String getApproveReason() {
         return approveReason;
     }

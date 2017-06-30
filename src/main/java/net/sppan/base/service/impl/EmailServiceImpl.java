@@ -55,7 +55,9 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
     public String sendQueryMessage(Long userId,List<SynnEmails> list) {
         User usersend = iUserService.findById(userId.intValue());
         //查询用户本身已经申请加班批准的时间数
+      //  int overtimehour = iApplyService.countByUseridAndApplytypeAndAndApplystatus(usersend.getId().longValue(),0,1);
         int overtimehour = iApplyService.findUsersCount(usersend.getId().longValue(),0);
+      //  int askforleave = iApplyService.countByUseridAndApplytypeAndAndApplystatus(usersend.getId().longValue(),1,1);
         int askforleave = iApplyService.findUsersCount(usersend.getId().longValue(),1);
         SynnChangeHours changeHours = changesService.findByUserid(usersend.getId().longValue());
         int restHours = 0;
@@ -70,7 +72,7 @@ public class EmailServiceImpl extends BaseServiceImpl<SynnEmails, Integer> imple
                         "以下是你的加班和换休工时信息"+
                                "<p>你总共的加班时间为："+overtimehour+"小时</p>"+
                                " <p>你曾经总共的换休时间为："+askforleave+"小时</p>"+
-                                 "<p>你目前所剩的可换休时间为："+restHours+"小时</p>)");
+                                 "<p>你目前所剩的可换休时间为："+restHours+"小时</p>");
             }
             iEmailDao.save(list.get(i));
         }

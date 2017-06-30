@@ -31,7 +31,7 @@ public interface IApplyService extends IBaseService<SynnApply, Integer>{
     int deleteByApplyid(Long applyId);
 
     int findUsersCount(Long userId, Integer applytype);
-
+    int countByUseridAndApplytypeAndAndApplystatus(Long userId, Integer applytype, Integer approveStatus);
 }
 
 

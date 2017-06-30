@@ -98,6 +98,11 @@ public class SynnApplyController extends BaseController {
     @ResponseBody
     public JsonResult delete(@PathVariable Integer id, ModelMap map) {
         try {
+                        /*验证是否已经审批过*/
+            SynnApply synnApply_new = iApplyService.findByApplyid(id.longValue());
+            if (synnApply_new.getApplystatus() != 0) {
+                return JsonResult.failure("此申请已经审批过，不能进行删除");
+            }
             iApplyService.deleteByApplyid(id.longValue());
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,6 +125,9 @@ public class SynnApplyController extends BaseController {
                     /*验证工时*/
             if (synnApply.getApplytype() == 1) {
                 SynnChangeHours changeHours = iChangesService.findByUserid(user.getId().longValue());
+                if(changeHours== null){
+                    return JsonResult.failure("你目前暂无可调休工时");
+                }
                 if (hours > changeHours.getHours()) {
                     return JsonResult.failure("超过可调休工时,请重新填写");
                 }

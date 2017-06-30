@@ -153,18 +153,27 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
         User usersend = iUserDao.findById(synnapp.getUserid().intValue());
         /*更新申请状态*/
         update(synnapp);
-        //获取员工换休加班信息
-        int overtimehour = iSynnApplydao.findUsersCount(synnapp.getUserid(), 0);
-        int askforleave = iSynnApplydao.findUsersCount(synnapp.getUserid(), 1);
-        SynnChangeHours changeHours = iChangesService.findByUserid(synnapp.getUserid().longValue());
+        //获取员工换休加班总共信息
+        //int overtimehour = iSynnApplydao.findUsersCount(synnapp.getUserid(), 0);
+        int overtimehour = this.findUsersCount(synnapp.getUserid(),0);
+        //int askforleave = iSynnApplydao.countByUseridAndApplytypeAndAndApplystatus(synnapp.getUserid(), 1,1);
+        int askforleave = this.findUsersCount(synnapp.getUserid(),1);
+
+        JSONObject json = new JSONObject();
+        SynnChangeHours changeHours = iChangesService.findByUserid(synnapp.getUserid().longValue());//之前所剩的调休时间
         int restHours = 0;
         if (changeHours == null) {
             restHours = 0;
         } else {
             restHours = iChangesService.findByUserid(usersend.getId().longValue()).getHours();
         }
+        int restHours_now=0;
+        if(synnapp.getApplytype() ==0){
+            restHours_now=restHours+synnapp.getHours();  //加班
+        }else{
+            restHours_now=restHours-synnapp.getHours(); //休假
+        }
 
-        JSONObject json = new JSONObject();
         json.put("from", synnEmail.get(0).getSendfrom());
         json.put("password",MD5Utils.convertMD5(usersend.getPassword()));
         json.put("to",synnEmail.get(0).getSendto()); //默认只发送用户回复的邮件
@@ -174,7 +183,7 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
         json.put("hours",synnapp.getHours());
         json.put("overtimehour",overtimehour);
         json.put("askforleave",askforleave);
-        json.put("restHours",restHours);
+        json.put("restHours",restHours_now);
         String approveStatus ="";
         //审批状态：0=未审批 1=已审批 2 拒绝
         switch(synnapp.getApplystatus()){
@@ -189,7 +198,6 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
                 break;
         }
         json.put("approveStatus",approveStatus);
-
         if(synnapp.getApplystatus()==1 ){  //1。同意则修改员工change表，加班申请累加，调休申请减
             json.put("system", "system");
             iChangesService.updateByUserId(synnapp.getApplytype()==0?synnapp.getHours():-synnapp.getHours(),synnapp.getUserid().longValue());
@@ -207,9 +215,16 @@ public class ApplyServiceImpl extends BaseServiceImpl<SynnApply,Integer> impleme
 
     @Override
     public int findUsersCount(Long userId, Integer applytype) {
+        if(iSynnApplydao.countByUseridAndApplytypeAndAndApplystatus(userId,applytype,1) == 0){
+            return 0;
+        }
         return iSynnApplydao.findUsersCount(userId,applytype);
     }
 
+    @Override
+    public int countByUseridAndApplytypeAndAndApplystatus(Long userId, Integer applytype, Integer approveStatus) {
+        return iSynnApplydao.countByUseridAndApplytypeAndAndApplystatus(userId,applytype,approveStatus);
+    }
 
 
     @Override
