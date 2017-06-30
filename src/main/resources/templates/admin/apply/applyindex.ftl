@@ -121,7 +121,7 @@
 			        sortable: true
 			    },{
 			        title: "申请用户",
-			        field: "userid"
+			        field: "username"
 			    },{
 			        title: "审批状态",
 			        sortable: true,

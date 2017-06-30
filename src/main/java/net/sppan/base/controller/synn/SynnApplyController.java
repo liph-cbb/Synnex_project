@@ -139,6 +139,7 @@ public class SynnApplyController extends BaseController {
             synnApply.setLast_update_datetime(new Date());
             synnApply.setApplydatetime(new Date());
             synnApply.setApproveuserid(user.getLeaderid().longValue());
+            synnApply.setUsername(user.getNickName());
 
             SynnEmails synnEmails = new SynnEmails();
             synnEmails.setSendfrom(user.getEmail());
